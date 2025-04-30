@@ -1,0 +1,23 @@
+/*
+ * Copyright (c) 2024 . All rights reserved.
+ */
+
+ 
+#descuento{
+    background-color: rgb(16, 16, 15);
+    color: white;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#pilatos{
+    width: 325px;
+    height: 67px;
+}
+
+.carousel-item { display: flex; justify-content: center; align-items: center; 
+} 
+.carousel-item img { max-width: 100%; height: auto; 
+}
