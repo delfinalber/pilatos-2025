@@ -65,18 +65,18 @@
     <!--Formulario Materialize-->
    
       <div class="row">
-        <form class="col s12">
+        <form class="col s12" action="insertar.php" method="POST">
           <div class="row">
             <div class="input-field col s4">
-              <input placeholder="Nombres" id="first_name" type="text" class="validate">
+              <input placeholder="Nombres" id="first_name" type="text" class="validate" name="nombre">
               <label for="first_name">Nombres</label>
             </div>
             <div class="input-field col s4">
-              <input placeholder="Apellidos" id="last_name" type="text" class="validate">
+              <input placeholder="Apellidos" id="last_name" type="text" class="validate" name="apellido">
               <label for="last_name">Apellidos</label>
             </div>
             <div class="input-field col s4">
-              <input placeholder="Edad" id="last_name" type="number" class="validate">
+              <input placeholder="Edad" id="last_name" type="number" class="validate" name="edad">
               <label for="last_name">Edad</label>
             </div>
           </div>
@@ -84,12 +84,12 @@
             <div class="input-field col s12">
               <div class="input-field col s6">
                 <i class="material-icons prefix">phone</i>
-                <input id="icon_telephone" type="tel" class="validate">
+                <input id="icon_telephone" type="tel" class="validate" name="telefono">
                 <label for="icon_telephone">Telephone</label>
               </div>
               <div class="input-field col s6">
                 <i class="material-icons prefix">mail</i>
-                <input id="email" type="email" class="validate">
+                <input id="email" type="email" class="validate" name="email">
                 <label for="email">Email</label>
                 
               </div>
@@ -98,17 +98,17 @@
           <div class="row">
             <div class="input-field col s6">
               <i class="material-icons prefix">perm_identity</i>
-              <input id="usuario" type="password" class="validate">
+              <input id="usuario" type="password" class="validate" name="usuario">
               <label for="usuario">Usuario</label>
             </div>
             <div class="input-field col s6">
               <i class="material-icons prefix">fingerprint</i>
-              <input id="email" type="password" class="validate">
+              <input id="email" type="password" class="validate" name="password">
               <label for="email">Contraseña</label>
               
             </div>
           </div>
-          <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+          <button class="btn waves-effect waves-light" type="submit" name="action">Enviar             
             <i class="material-icons right">rotate_right</i>
           </button>
         
@@ -152,15 +152,15 @@
               <form class="col s12">
                 <div class="row">
                   <div class="input-field col s4">
-                    <input placeholder="Nombres" id="first_name" type="text" class="validate">
+                    <input placeholder="Nombres" id="first_name" type="text" class="validate" name="nombre">
                     <label for="first_name"><b>Nombres</b></label>
                   </div>
                   <div class="input-field col s4">
-                    <input placeholder="Apellidos" id="last_name" type="text" class="validate">
+                    <input placeholder="Apellidos" id="last_name" type="text" class="validate" name="apellido">
                     <label for="last_name">Apellidos</label>
                   </div>
                   <div class="input-field col s4">
-                    <input placeholder="Edad" id="last_name" type="number" class="validate">
+                    <input placeholder="Edad" id="last_name" type="number" class="validate" name="edad">
                     <label for="last_name">Edad</label>
                   </div>
                 </div>
@@ -168,12 +168,12 @@
                   <div class="input-field col s12">
                     <div class="input-field col s6">
                       <i class="material-icons prefix">phone</i>
-                      <input id="icon_telephone" type="tel" class="validate">
+                      <input id="icon_telephone" type="tel" class="validate" name="telefono">
                       <label for="icon_telephone">Telephone</label>
                     </div>
                     <div class="input-field col s6">
                       <i class="material-icons prefix">mail</i>
-                      <input id="email" type="email" class="validate">
+                      <input id="email" type="email" class="validate" name="email">
                       <label for="email">Email</label>
                       
                     </div>
@@ -182,12 +182,12 @@
                 <div class="row">
                   <div class="input-field col s6">
                     <i class="material-icons prefix">perm_identity</i>
-                    <input id="usuario" type="password" class="validate">
+                    <input id="usuario" type="password" class="validate" name="usuario">
                     <label for="usuario">Usuario</label>
                   </div>
                   <div class="input-field col s6">
                     <i class="material-icons prefix">fingerprint</i>
-                    <input id="email" type="password" class="validate">
+                    <input id="email" type="password" class="validate" name="password">
                     <label for="email">Contraseña</label>
                     
                   </div>
@@ -198,8 +198,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Enviar</button>
+            <button type="clear" class="btn btn-secondary" data-bs-dismiss="modal">Borrar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
           </div>
           </form>
         </div>
