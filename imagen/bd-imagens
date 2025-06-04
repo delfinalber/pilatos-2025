@@ -1,0 +1,20 @@
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS pilatos;
+USE pilatos;
+
+-- Crear tabla imagenes
+CREATE TABLE IF NOT EXISTS imagenes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_original VARCHAR(255) NOT NULL,
+    nombre_archivo VARCHAR(255) NOT NULL,
+    ruta_archivo VARCHAR(500) NOT NULL,
+    tipo_mime VARCHAR(100) NOT NULL,
+    tamaño INT NOT NULL,
+    descripcion TEXT,
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    activo TINYINT(1) DEFAULT 1
+);
+
+-- Índices para mejorar rendimiento
+CREATE INDEX idx_fecha_subida ON imagenes(fecha_subida);
+CREATE INDEX idx_activo ON imagenes(activo);
