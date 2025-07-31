@@ -1,6 +1,64 @@
-/*
- * Copyright (c) 2024 . All rights reserved.
- */
+/* Colores extraídos del logo */
+:root {
+    --color-amarillo: #FFDE00; /* Amarillo */
+    --color-azul: #003893;     /* Azul */
+    --color-rojo: #C60C30;     /* Rojo */
+    --color-oscuro: #212529;   /* Negro/Verde oscuro del engranaje */
+}
+
+/* Estilo para el botón flotante */
+.btn-flotante {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0;
+    border: 2px solid var(--color-oscuro);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.btn-flotante:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-flotante img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+/* Personalización del Modal */
+.modal-header-custom {
+    background-color: var(--color-oscuro);
+    color: var(--color-amarillo);
+    border-bottom: 3px solid var(--color-amarillo);
+}
+
+.modal-content {
+    border: 2px solid var(--color-oscuro);
+}
+
+.form-control:focus {
+    border-color: var(--color-azul);
+    box-shadow: 0 0 0 0.25rem rgba(0, 56, 147, 0.25);
+}
+
+.btn-login {
+    background-color: var(--color-rojo);
+    border-color: var(--color-rojo);
+    font-weight: bold;
+}
+
+.btn-login:hover {
+    background-color: #a50a28; /* Un rojo más oscuro para el hover */
+    border-color: #a50a28;
+}
 
  
 #descuento{

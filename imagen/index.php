@@ -79,7 +79,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Imágenes - Pilatos</title>
     <link rel="stylesheet" href="style-imagen.css">
-            <h1>🖼️ Gestor de Imágenes</h1>
+            <h1> Gestor de Imágenes</h1>
             <p>Sistema de administración de imágenes - Base de datos Pilatos</p>
         </div>
         
@@ -91,7 +91,7 @@ try {
             <?php endif; ?>
             
             <div class="upload-section">
-                <h2>📤 Subir Nueva Imagen</h2>
+                <h2> Subir Nueva Imagen</h2>
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="imagen">Seleccionar Imagen:</label>
@@ -113,12 +113,15 @@ try {
                     </div>
                     
                     <button type="submit" name="subir" class="btn">
-                        🚀 Subir Imagen
+                         Subir Imagen
+                    </button>
+                    <button type="reset" name="subir" class="btn">
+                         Limpiar Formulario
                     </button>
                 </form>
             </div>
             
-            <h2>🖼️ Galería de Imágenes</h2>
+            <h2> Galería de Imágenes</h2>
             
             <?php if (empty($imagenes)): ?>
                 <div class="no-images">
