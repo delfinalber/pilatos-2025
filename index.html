@@ -26,42 +26,39 @@
         <div class="col-md-12">
           
           <center>
-            <!-- Botón Flotante con Imagen -->
-    <button id="btn-flotante" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#loginModal">
-        <img src="./img/logo.png" alt="Logo" class="img-fluid" style="max-width:60px;">
-    </button>
+          
+ <!-- Botón Flotante con Imagen -->
+        <a href="#" class="float-button hover-zoom" data-bs-toggle="modal" data-bs-target="#loginModal">
+        <img src="./img/técnico.jpg" alt="Logo Institución">
+    </a>
 
-    <!-- Modal Bootstrap -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content" style="background: linear-gradient(135deg, #fedc32 0%, #3457b2 80%, #c22d2d 100%);">
-          <div class="modal-header">
-            <h5 class="modal-title" id="loginLabel">Inicio de Sesión</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <form id="loginForm" autocomplete="off">
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="usuario" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="usuario" name="usuario" placeholder="usuario@email.com" required>
-                <div class="invalid-feedback">Ingrese un correo electrónico válido.</div>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" required pattern=".{5,}">
-                <div class="invalid-feedback">La contraseña debe tener al menos 5 caracteres.</div>
-              </div>
-              <div id="msg-error" class="alert alert-danger d-none small"></div>
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Inicio de Sesión</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm" action="login.php" method="POST">
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Usuario (Correo Electrónico)</label>
+                            <input type="email" class="form-control" id="emailInput" name="usuario" placeholder="tu-correo@ejemplo.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="passwordInput" name="password" required>
+                        </div>
+                        <div class="d-grid">
+                           <button type="submit" class="btn btn-primary btn-ingresar">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-     <!-- fin Modal Bootstrap -->
-     <!-- finBotón Flotante con Imagen -->
+    <!--Fin Botón Flotante con Imagen -->
+
                 <img id="pilatos" src="./img/PILATOS.webp" alt="" >
             
             </center>

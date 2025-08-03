@@ -1,66 +1,83 @@
-/* Colores extraídos del logo */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+ 
+
+/*
+ * Copyright (c) 2025 . All rights reserved.
+ */
+
+/* Paleta de colores extraída del logo */
 :root {
-    --color-amarillo: #FFDE00; /* Amarillo */
-    --color-azul: #003893;     /* Azul */
-    --color-rojo: #C60C30;     /* Rojo */
-    --color-oscuro: #212529;   /* Negro/Verde oscuro del engranaje */
+    --color-primario-amarillo: #FBCF0A; /* Amarillo del logo */
+    --color-secundario-azul: #003893;   /* Azul del logo */
+    --color-acento-rojo: #CE1126;        /* Rojo del logo */
+    --color-fondo-oscuro: #2D2A26;      /* Negro/Gris oscuro del engranaje */
+    --color-texto-claro: #FFFFFF;
 }
 
-/* Estilo para el botón flotante */
-.btn-flotante {
+/* ======== BOTÓN FLOTANTE ======== */
+.float-button {
     position: fixed;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     bottom: 40px;
     right: 40px;
-    background-color: white;
+    background-color: var(--color-texto-claro);
     border-radius: 50%;
-    padding: 0;
-    border: 2px solid var(--color-oscuro);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
+    transition: transform 0.3s ease; /* Transición suave para el zoom */
 }
 
-.btn-flotante:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.btn-flotante img {
+.float-button img {
     width: 100%;
     height: auto;
     border-radius: 50%;
 }
 
-/* Personalización del Modal */
-.modal-header-custom {
-    background-color: var(--color-oscuro);
-    color: var(--color-amarillo);
-    border-bottom: 3px solid var(--color-amarillo);
+/* Efecto Hover-Zoom */
+.float-button.hover-zoom:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 25px rgba(45, 42, 38, 0.4);
 }
 
-.modal-content {
-    border: 2px solid var(--color-oscuro);
+/* ======== ESTILOS DEL MODAL ======== */
+#loginModal .modal-content {
+    border: 2px solid var(--color-primario-amarillo);
+    background-color: var(--color-texto-claro);
 }
 
-.form-control:focus {
-    border-color: var(--color-azul);
-    box-shadow: 0 0 0 0.25rem rgba(0, 56, 147, 0.25);
+#loginModal .modal-header {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-claro);
+    border-bottom: 2px solid var(--color-primario-amarillo);
 }
 
-.btn-login {
-    background-color: var(--color-rojo);
-    border-color: var(--color-rojo);
+#loginModal .modal-title {
+    color: var(--color-primario-amarillo);
     font-weight: bold;
 }
 
-.btn-login:hover {
-    background-color: #a50a28; /* Un rojo más oscuro para el hover */
-    border-color: #a50a28;
+#loginModal .modal-body {
+    background-color: #f8f9fa; /* Un gris muy claro para el fondo del formulario */
 }
 
- 
+/* Botón de ingresar personalizado */
+.btn-ingresar {
+    background-color: var(--color-secundario-azul);
+    border-color: var(--color-secundario-azul);
+    font-weight: bold;
+}
+
+.btn-ingresar:hover {
+    background-color: var(--color-acento-rojo);
+    border-color: var(--color-acento-rojo);
+}
+
+
+
 #descuento{
     background-color: rgb(16, 16, 15);
     color: white;
