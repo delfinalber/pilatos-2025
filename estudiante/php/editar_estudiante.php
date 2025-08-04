@@ -1,5 +1,5 @@
 <?php // php/editar_estudiante.php
-require 'conexion.php';
+require './conexion.php';
 // Lógica similar a registrar, pero con UPDATE y manejo de foto opcional
 // ... Código completo en la sección de implementación ...
 parse_str(file_get_contents("php://input"), $_POST); // Leer datos del POST si no son form-data

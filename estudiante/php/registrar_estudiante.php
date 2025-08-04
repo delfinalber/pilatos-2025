@@ -1,5 +1,5 @@
 <?php
-require 'conexion.php';
+require './conexion.php';
 
 $cod_estudiante = $_POST['cod_estudiante'] ?? '';
 $nom_estudiante = $_POST['nom_estudiante'] ?? '';

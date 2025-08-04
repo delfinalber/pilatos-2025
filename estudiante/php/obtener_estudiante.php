@@ -1,5 +1,5 @@
 <?php // php/obtener_estudiante.php
-require 'conexion.php';
+require './conexion.php';
 $id = $_GET['id'] ?? 0;
 $stmt = $pdo->prepare("SELECT * FROM estudiante WHERE id_estudiante = ?");
 $stmt->execute([$id]);

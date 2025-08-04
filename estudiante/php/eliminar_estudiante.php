@@ -1,5 +1,5 @@
 <?php // php/eliminar_estudiante.php
-require 'conexion.php';
+require './conexion.php';
 $data = json_decode(file_get_contents('php://input'), true);
 $id = $data['id_estudiante'] ?? 0;
 
