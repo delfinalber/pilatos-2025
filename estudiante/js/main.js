@@ -116,7 +116,7 @@ function cargarEstudiantes(url = '../php/listar_estudiantes.php') {
                 data.forEach(estudiante => {
                     tabla.innerHTML += `
                         <tr>
-                            <td><img src="${estudiante.foto_estudiante || '../../img/fotos/default.png'}" alt="Foto" width="50" class="img-thumbnail"></td>
+                            <td><img src="${estudiante.foto_estudiante || '../../img/fotos/default.png'}" alt="Foto" width="30" class="img-thumbnail"></td>
                             <td>${estudiante.cod_estudiante}</td>
                             <td>${estudiante.nom_estudiante}</td>
                             <td>${estudiante.email_estudiante}</td>

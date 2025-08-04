@@ -110,7 +110,7 @@
             <div class="card-body card-body-custom">
                 <div class="row mb-3">
                     <div class="col-md-6">
-                         <a href="registro_estudiante.html" class="btn btn-primary btn-custom mb-2">Nuevo Registro</a>
+                         <a href="./estudiante.html" class="btn btn-primary btn-custom mb-2">Nuevo Registro</a>
                     </div>
                     <div class="col-md-6">
                         <form id="searchForm" class="d-flex">
@@ -133,7 +133,30 @@
                             </tr>
                         </thead>
                         <tbody id="tablaEstudiantes">
-                            </tbody>
+                            <?php
+                            // Conexión a la base de datos
+                            $conn = new mysqli("localhost", "root", "", "pilatos");
+                            if ($conn->connect_error) {
+                              die("Conexión fallida: " . $conn->connect_error);
+                            }
+                            $sql = "SELECT * FROM estudiante";
+                            $result = $conn->query($sql);
+                            while ($row = $result->fetch_assoc()) {
+                              echo "<tr>";
+                              echo "<td><img src='../img/fotos/" . htmlspecialchars($row['foto_estudiante']) . "' width='30' height='30' class='img-thumbnail'></td>";
+                              echo "<td>" . htmlspecialchars($row['cod_estudiante']) . "</td>";
+                              echo "<td>" . htmlspecialchars($row['nom_estudiante']) . "</td>";
+                              echo "<td>" . htmlspecialchars($row['email_estudiante']) . "</td>";
+                              echo "<td>" . htmlspecialchars($row['tel_estudiante']) . "</td>";
+                              echo "<td>
+                                <button type='button' class='btn btn-warning btn-sm editarBtn' data-id='" . $row['id_estudiante'] . "'>Editar</button>
+                                <button type='button' class='btn btn-danger btn-sm eliminarBtn' data-id='" . $row['id_estudiante'] . "'>Eliminar</button>
+                              </td>";
+                              echo "</tr>";
+                            }
+                            $conn->close();
+                            ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
