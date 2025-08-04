@@ -15,7 +15,7 @@ if (empty($cod_estudiante) || empty($nom_estudiante) || empty($email_estudiante)
 
 // Manejo de la subida de la foto
 if (isset($_FILES['foto_estudiante']) && $_FILES['foto_estudiante']['error'] == 0) {
-    $target_dir = "../img/fotos/";
+    $target_dir = "../../img/fotos/";
     // Crear un nombre de archivo único para evitar sobreescrituras
     $file_extension = pathinfo($_FILES["foto_estudiante"]["name"], PATHINFO_EXTENSION);
     $target_file = $target_dir . uniqid('foto_', true) . '.' . $file_extension;
@@ -23,7 +23,7 @@ if (isset($_FILES['foto_estudiante']) && $_FILES['foto_estudiante']['error'] == 
     // Mover el archivo subido a la carpeta de destino
     if (move_uploaded_file($_FILES["foto_estudiante"]["tmp_name"], $target_file)) {
         // Guardamos la ruta relativa accesible desde el HTML
-        $foto_url = 'img/fotos/' . basename($target_file);
+        $foto_url = '../../img/fotos/' . basename($target_file);
     } else {
         echo json_encode(['success' => false, 'message' => 'Error al subir la foto.']);
         exit;

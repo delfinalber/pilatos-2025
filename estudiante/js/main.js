@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (searchInput.trim() === '') {
                 cargarEstudiantes();
             } else {
-                cargarEstudiantes(`..php/buscar_estudiante.php?cod_estudiante=${searchInput}`);
+                cargarEstudiantes(`../php/buscar_estudiante.php?cod_estudiante=${searchInput}`);
             }
         });
     }
