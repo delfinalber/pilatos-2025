@@ -1,0 +1,88 @@
+/*
+ * Copyright (c) 2025 . All rights reserved.
+ */
+.logo-container {
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-right: 10px;
+                            }
+                            .logo-img {
+                                width: 40px;
+                                height: 40px;
+                                object-fit: cover;
+                                border-radius: 50%;
+                                border: 2px solid #0d6efd;
+                                background: #fff;
+                                box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+                                vertical-align: middle;
+                            }
+/* Paleta de Colores Pastel Educativos */
+:root {
+    --color-primario: #A0D2EB; /* Azul claro */
+    --color-secundario: #FDEAA8; /* Amarillo suave */
+    --color-acento: #FED7C3; /* Durazno suave */
+    --color-exito: #C3E6CB; /* Verde pálido */
+    --color-fondo: #F5F5F5;
+    --color-texto: #333333;
+    --color-blanco: #FFFFFF;
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+.card-header-custom {
+    background-color: var(--color-primario);
+    color: var(--color-texto);
+    border-bottom: 2px solid var(--color-acento);
+}
+
+.card-body-custom {
+    background-color: var(--color-blanco);
+}
+
+.btn-custom {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+    color: var(--color-texto);
+    font-weight: bold;
+}
+
+.btn-custom:hover {
+    background-color: #8abed6; /* Un tono más oscuro de azul */
+    border-color: #8abed6;
+}
+
+.btn-custom-secondary {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: var(--color-texto);
+}
+
+.btn-custom-secondary:hover {
+    background-color: #fec0a7; /* Un tono más oscuro de durazno */
+}
+
+.btn-custom-search {
+    border-color: var(--color-primario);
+    color: var(--color-primario);
+}
+
+.btn-custom-search:hover {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.table-header-custom {
+    background-color: var(--color-primario) !important;
+}
+
+/* Estilos para Modales */
+.modal-header-custom {
+    background-color: var(--color-acento);
+    color: var(--color-texto);
+}
+.modal-body-custom, .modal-footer-custom {
+    background-color: var(--color-blanco);
+}

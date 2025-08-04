@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
                 // Redirigir a registro.php
-                window.location.replace("registro.php");
+                window.location.replace("./estudiante/estudiante.html");
             } else {
                 // Mostrar ventana emergente personalizada
                 mostrarVentanaEmergente("Usuario o contraseña incorrectos.");
@@ -88,9 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function mostrarVentanaEmergente(mensaje) {
         // Colores de ejemplo basados en la imagen "tecnico.jpg"
         // Puedes ajustar estos valores según los colores reales de la imagen
-        const colorFondo = "#1a237e"; // Azul oscuro
-        const colorBorde = "#ffc107"; // Amarillo
-        const colorTexto = "#fff";    // Blanco
+        // Obtener los colores del modal para usarlos en la ventana emergente
+        const modalContent = document.querySelector('#loginModal .modal-content');
+        const style = getComputedStyle(modalContent);
+        const colorFondo = style.backgroundColor;
+        const colorBorde = style.borderColor || "#dee2e6";
+        const colorTexto = style.color || "#212529";
 
         // Crear el overlay
         const overlay = document.createElement('div');
