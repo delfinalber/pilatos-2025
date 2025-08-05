@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../style.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="./css/style.css">
+       
+    <link rel="stylesheet" href="css/pastel.css">
 
     
 </head>
@@ -19,7 +20,7 @@
     <div class="col-md-12">
         <center>
             
-            <p id="descuento">ENVIOS GRATIS POR COMPRAS SUPERIORES A $350.000</p>
+            <p >ENVIOS GRATIS POR COMPRAS SUPERIORES A $350.000</p>
         </center>
     </div>
 </div>
@@ -103,48 +104,36 @@
     <br><br>
     <!--Formulario de Registro-->
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center card-header-custom">
-                        <h4 class="mb-0">
-                            <span class="logo-container">
-                                <img src="../img/tecnico.jpg" alt="Logo" class="logo-img">
-                            </span>
-                            Formulario de Registro de Estudiantes Tecncio Superior
-                        </h4>
-                      
+        <div class="card card-pastel">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Registro de Estudiante Tecnico Superior</h3>
+                <?php if(isset($_SESSION['message'])): ?>
+                    <div class="alert alert-success"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
+                <?php endif; ?>
+                <form action="guardar_estudiante.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    <!-- id_estudiante oculto, lo asigna la BD -->
+                    <div class="mb-3">
+                        <label for="cod_estudiante" class="form-label">Documento de Identidad</label>
+                        <input type="text" class="form-control" name="cod_estudiante" required>
                     </div>
-                    <div class="card-body card-body-custom">
-                        <div id="mensaje" class="alert d-none" role="alert"></div>
-                        <form id="registroForm" novalidate>
-                            <div class="mb-3">
-                                <label for="cod_estudiante" class="form-label">Código (Documento de Identidad)</label>
-                                <input type="text" class="form-control" id="cod_estudiante" name="cod_estudiante" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nom_estudiante" class="form-label">Nombre Completo</label>
-                                <input type="text" class="form-control" id="nom_estudiante" name="nom_estudiante" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="tel_estudiante" class="form-label">Teléfono</label>
-                                <input type="number" class="form-control" id="tel_estudiante" name="tel_estudiante" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email_estudiante" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="email_estudiante" name="email_estudiante" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="foto_estudiante" class="form-label">Foto del Estudiante</label>
-                                <input type="file" class="form-control" id="foto_estudiante" name="foto_estudiante" accept="image/*" required>
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-custom">Registrar Estudiante</button>
-                                <a href="./edi_estudiantes.php" class="btn btn-secondary btn-custom-secondary">Ver Registros</a>
-                            </div>
-                        </form>
+                    <div class="mb-3">
+                        <label for="nom_estudiante" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nom_estudiante" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="tel_estudiante" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" name="tel_estudiante" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email_estudiante" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email_estudiante" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto_estudiante" class="form-label">Foto</label>
+                        <input type="file" class="form-control" accept="image/*" name="foto_estudiante" required>
+                    </div>
+                    <button type="submit" class="btn btn-pastel w-100">Registrar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -294,6 +283,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
-     <script src="js/main.js"></script>
+     
+     
 </body>
 </html>

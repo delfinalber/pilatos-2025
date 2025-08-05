@@ -1,0 +1,38 @@
+/*
+ * Copyright (c) 2025 . All rights reserved.
+ */
+
+:root {
+    --color-primario: #A8D8EA;    /* azul pastel */
+    --color-secundario: #B4F8C8;  /* verde pastel */
+    --color-acentos: #F6DFEB;     /* rosa pastel claro */
+    --color-fondo: #F9F9F9;
+    --color-texto: #34495E;
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+.form-control, .form-select {
+    background-color: #fff !important;
+    border: 1px solid #D3EFFE !important;
+}
+
+.btn-pastel {
+    background-color: var(--color-primario);
+    color: var(--color-texto);
+    border: none;
+}
+
+.btn-pastel:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-texto);
+}
+
+.card-pastel {
+    background-color: var(--color-acentos);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #b4f8c85a;
+}

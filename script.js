@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
                 // Redirigir a registro.php
-                window.location.replace("./estudiante/estudiante.html");
+                window.location.replace("./estudiante/registro_estudiante.php");
             } else {
                 // Mostrar ventana emergente personalizada
                 mostrarVentanaEmergente("Usuario o contraseña incorrectos.");

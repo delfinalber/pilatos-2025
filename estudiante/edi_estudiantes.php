@@ -19,7 +19,7 @@
     <div class="col-md-12">
         <center>
             
-            <p id="descuento">ENVIOS GRATIS POR COMPRAS SUPERIORES A $350.000</p>
+            <p >ENVIOS GRATIS POR COMPRAS SUPERIORES A $350.000</p>
         </center>
     </div>
 </div>
@@ -102,110 +102,132 @@
 
     <br><br>
     <!--Formulario de Registro-->
-   <div class="container-fluid mt-4">
-        <div class="card shadow-sm">
-            <div class="card-header text-center card-header-custom">
-                <h4 class="mb-0">🧑‍🎓 Gestión de Estudiantes Registrados</h4>
-            </div>
-            <div class="card-body card-body-custom">
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                         <a href="./estudiante.html" class="btn btn-primary btn-custom mb-2">Nuevo Registro</a>
-                    </div>
-                    <div class="col-md-6">
-                        <form id="searchForm" class="d-flex">
-                            <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar por Código de Estudiante..." aria-label="Search">
-                            <button class="btn btn-outline-success btn-custom-search" type="submit">Buscar</button>
-                        </form>
-                    </div>
-                </div>
-                <div id="mensaje-gestion" class="alert d-none" role="alert"></div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="table-header-custom">
-                            <tr>
-                                <th>Foto</th>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaEstudiantes">
-                            <?php
-                            // Conexión a la base de datos
-                            $conn = new mysqli("localhost", "root", "", "pilatos");
-                            if ($conn->connect_error) {
-                              die("Conexión fallida: " . $conn->connect_error);
-                            }
-                            $sql = "SELECT * FROM estudiante";
-                            $result = $conn->query($sql);
-                            while ($row = $result->fetch_assoc()) {
-                              echo "<tr>";
-                              echo "<td><img src='../img/fotos/" . htmlspecialchars($row['foto_estudiante']) . "' width='30' height='30' class='img-thumbnail'></td>";
-                              echo "<td>" . htmlspecialchars($row['cod_estudiante']) . "</td>";
-                              echo "<td>" . htmlspecialchars($row['nom_estudiante']) . "</td>";
-                              echo "<td>" . htmlspecialchars($row['email_estudiante']) . "</td>";
-                              echo "<td>" . htmlspecialchars($row['tel_estudiante']) . "</td>";
-                              echo "<td>
-                                <button type='button' class='btn btn-warning btn-sm editarBtn' data-id='" . $row['id_estudiante'] . "'>Editar</button>
-                                <button type='button' class='btn btn-danger btn-sm eliminarBtn' data-id='" . $row['id_estudiante'] . "'>Eliminar</button>
-                              </td>";
-                              echo "</tr>";
-                            }
-                            $conn->close();
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+  
+    <?php
+require 'config.php';
 
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title" id="editModalLabel">✏️ Editar Información del Estudiante</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+$buscar = '';
+if (!empty($_GET['buscar'])) {
+    $buscar = htmlspecialchars(trim($_GET['buscar']));
+    $sql = "SELECT * FROM estudiante WHERE cod_estudiante LIKE ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(["%$buscar%"]);
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM estudiante ORDER BY id_estudiante DESC");
+    $stmt->execute();
+}
+$estudiantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar/Eliminar Estudiantes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/pastel.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card card-pastel">
+        <div class="card-body">
+            <h3 class="text-center mb-4">Gestión de Estudiantes</h3>
+            <form class="mb-4" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="buscar" placeholder="Buscar por Documento..." value="<?= htmlspecialchars($buscar) ?>">
+                    <button class="btn btn-pastel" type="submit">Buscar</button>
                 </div>
-                <div class="modal-body modal-body-custom">
-                    <form id="editForm">
-                        <input type="hidden" id="edit_id_estudiante" name="id_estudiante">
-                        <div class="mb-3">
-                            <label for="edit_cod_estudiante" class="form-label">Código</label>
-                            <input type="text" class="form-control" id="edit_cod_estudiante" name="cod_estudiante" required>
+            </form>
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Documento</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Foto</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($estudiantes as $est): ?>
+                    <tr>
+                        <td><?= $est['id_estudiante'] ?></td>
+                        <td><?= htmlspecialchars($est['cod_estudiante']) ?></td>
+                        <td><?= htmlspecialchars($est['nom_estudiante']) ?></td>
+                        <td><?= htmlspecialchars($est['tel_estudiante']) ?></td>
+                        <td><?= htmlspecialchars($est['email_estudiante']) ?></td>
+                        <td>
+                            <?php if ($est['foto_estudiante']): ?>
+                                <img src="<?= htmlspecialchars($est['foto_estudiante']) ?>" width="50" class="rounded-circle">
+                            <?php endif; ?>
+                        </td>
+                        <td><?= $est['fecha'] ?></td>
+                        <td>
+                            <button data-bs-toggle="modal"
+                                    data-bs-target="#modalEditar<?= $est['id_estudiante'] ?>"
+                                    class="btn btn-sm btn-pastel">
+                                    Editar
+                            </button>
+                            <form action="eliminar_estudiante.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="id_estudiante" value="<?= $est['id_estudiante'] ?>">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro desea eliminar este estudiante?')">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <!-- Modal EDITAR -->
+                    <div class="modal fade" id="modalEditar<?= $est['id_estudiante'] ?>" tabindex="-1">
+                        <div class="modal-dialog">
+                        <form class="modal-content" action="actualizar_estudiante.php" method="POST" enctype="multipart/form-data">
+                            <div class="modal-header" style="background: var(--color-primario);">
+                                <h5 class="modal-title">Editar Estudiante</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body" style="background: var(--color-secundario);">
+                                <input type="hidden" name="id_estudiante" value="<?= $est['id_estudiante'] ?>">
+                                <div class="mb-3">
+                                    <label>Documento</label>
+                                    <input type="text" name="cod_estudiante" class="form-control" value="<?= htmlspecialchars($est['cod_estudiante']) ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Nombre</label>
+                                    <input type="text" name="nom_estudiante" class="form-control" value="<?= htmlspecialchars($est['nom_estudiante']) ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Teléfono</label>
+                                    <input type="text" name="tel_estudiante" class="form-control" value="<?= htmlspecialchars($est['tel_estudiante']) ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Email</label>
+                                    <input type="email" name="email_estudiante" class="form-control" value="<?= htmlspecialchars($est['email_estudiante']) ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Foto Actual</label><br>
+                                    <img src="<?= htmlspecialchars($est['foto_estudiante']) ?>" width="80" class="rounded mb-2"><br>
+                                    <label>Cambiar Foto</label>
+                                    <input type="file" name="foto_estudiante" class="form-control" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="background: var(--color-acentos);">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-pastel" onclick="return confirm('¿Desea actualizar esta información?')">Guardar Cambios</button>
+                            </div>
+                        </form>
                         </div>
-                        <div class="mb-3">
-                            <label for="edit_nom_estudiante" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="edit_nom_estudiante" name="nom_estudiante" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit_tel_estudiante" class="form-label">Teléfono</label>
-                            <input type="number" class="form-control" id="edit_tel_estudiante" name="tel_estudiante" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit_email_estudiante" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="edit_email_estudiante" name="email_estudiante" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Foto Actual</label><br>
-                            <img id="foto_actual" src="" alt="Foto Actual" class="img-thumbnail" width="100">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit_foto_estudiante" class="form-label">Cambiar Foto (Opcional)</label>
-                            <input type="file" class="form-control" id="edit_foto_estudiante" name="foto_estudiante" accept="image/*">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer modal-footer-custom">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary btn-custom" id="saveChangesBtn">Guardar Cambios</button>
-                </div>
-            </div>
+                    </div>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
+
+
+   
     
 
     <!--fin formulario de Registro-->
@@ -355,5 +377,6 @@
     <script src="js/script.js"></script>
     
     <script src="js/main.js"></script>
+    
 </body>
 </html>
