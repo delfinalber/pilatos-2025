@@ -133,6 +133,7 @@
                         <input type="file" class="form-control" accept="image/*" name="foto_estudiante" required>
                     </div>
                     <button type="submit" class="btn btn-pastel w-100">Registrar</button>
+                    <button type="onclick" onclick="window.location.href='edi_estudiantes.php'" class="btn btn-pastel w-100">Listar</button>
                 </form>
             </div>
         </div>

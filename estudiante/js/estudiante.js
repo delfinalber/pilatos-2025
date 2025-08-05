@@ -85,23 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             }
-
-            if (!valido) {
-                e.preventDefault();
-                const mensajeError = document.getElementById('mensaje-gestion');
-                mensajeError.className = 'alert alert-danger';
-                mensajeError.innerHTML = mensajes.join('<br>');
-                mensajeError.classList.remove('d-none');
-                form.classList.add('enviado');
-                return false;
-            }   
         });
-    });                                                     
+    });
 });
-            errorMsg.classList.remove('d-none');
-            console.error('Error de conexión o respuesta no válida');
-            if ('caches' in window) {
-                caches.keys().then(function(names) {
-                    for (let name of names) caches.delete(name);
-                }); 
-            }
+
+           

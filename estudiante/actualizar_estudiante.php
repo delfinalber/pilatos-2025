@@ -7,13 +7,10 @@ $nom = htmlspecialchars(trim($_POST['nom_estudiante']));
 $tel = htmlspecialchars(trim($_POST['tel_estudiante']));
 $email = filter_var(trim($_POST['email_estudiante']), FILTER_SANITIZE_EMAIL);
 
-// Buscar foto previa
-$stmt = $pdo->prepare("SELECT foto_estudiante FROM estudiante WHERE id_estudiante=?");
-$stmt->execute([$id]);
-$prevFoto = $stmt->fetchColumn();
+// Obtiene ruta de imagen anterior (vía campo oculto)
+$prevFoto = isset($_POST['foto_estudiante_actual']) ? $_POST['foto_estudiante_actual'] : '';
 $rutaFoto = $prevFoto;
 
-// Si hay nueva foto
 if (!empty($_FILES['foto_estudiante']['name'])) {
     $carpeta = 'img/fotos/';
     if (!file_exists($carpeta)) { mkdir($carpeta, 0777, true); }
@@ -23,8 +20,12 @@ if (!empty($_FILES['foto_estudiante']['name'])) {
     $permitidos = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     $ext = strtolower(pathinfo($nombreFoto, PATHINFO_EXTENSION));
     if (in_array($ext, $permitidos) && getimagesize($foto['tmp_name'])) {
+        // Elimina imagen vieja si existe
+        if ($prevFoto && file_exists($prevFoto)) unlink($prevFoto);
         move_uploaded_file($foto['tmp_name'], $rutaFoto);
     } else {
+        session_start();
+        $_SESSION['message'] = "Archivo de imagen no válido.";
         header('Location: edi_estudiantes.php');
         exit();
     }
