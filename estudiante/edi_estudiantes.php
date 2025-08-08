@@ -103,131 +103,15 @@
     <br><br>
     <!--Formulario de Registro-->
   
-    <?php
-          require 'config.php';
+  
 
-          $buscar = '';
-          if (!empty($_GET['buscar'])) {
-              $buscar = htmlspecialchars(trim($_GET['buscar']));
-              $sql = "SELECT * FROM estudiante WHERE cod_estudiante LIKE ?";
-              $stmt = $pdo->prepare($sql);
-              $stmt->execute(["%$buscar%"]);
-          } else {
-              $stmt = $pdo->prepare("SELECT * FROM estudiante ORDER BY id_estudiante DESC");
-              $stmt->execute();
-          }
-          $estudiantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    ?>
-
-      <div class="container mt-5">
-          <div class="card card-pastel">
-              <div class="card-body">
-                  <h3 class="text-center mb-4">Gestión de Estudiantes</h3>
-                  <form class="mb-4" method="GET">
-                      <div class="input-group">
-                          <input type="text" class="form-control" name="buscar" placeholder="Buscar por Documento..." value="<?= htmlspecialchars($buscar) ?>">
-                          <button class="btn btn-pastel" type="submit">Buscar</button>
-                      </div>
-                  </form>
-                  <table class="table table-bordered align-middle">
-                      <thead>
-                          <tr>
-                              <th>ID</th>
-                              <th>Documento</th>
-                              <th>Nombre</th>
-                              <th>Teléfono</th>
-                              <th>Email</th>
-                              <th>Foto</th>
-                              <th>Fecha</th>
-                              <th>Acciones</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                      <?php foreach ($estudiantes as $est): ?>
-                          <tr>
-                              <td><?= $est['id_estudiante'] ?></td>
-                              <td><?= htmlspecialchars($est['cod_estudiante']) ?></td>
-                              <td><?= htmlspecialchars($est['nom_estudiante']) ?></td>
-                              <td><?= htmlspecialchars($est['tel_estudiante']) ?></td>
-                              <td><?= htmlspecialchars($est['email_estudiante']) ?></td>
-                              <td>
-                                  <?php if ($est['foto_estudiante']): ?>
-                                      <img src="<?= htmlspecialchars($est['foto_estudiante']) ?>" width="50" class="rounded-circle">
-                                  <?php endif; ?>
-                              </td>
-                              <td><?= $est['fecha'] ?></td>
-                              <td>
-                                  <button data-bs-toggle="modal"
-                                          data-bs-target="#modalEditar<?= $est['id_estudiante'] ?>"
-                                          class="btn btn-sm btn-pastel">
-                                          Editar
-                                  </button>
-                                  <form action="eliminar_estudiante.php" method="POST" style="display:inline;">
-                                      <input type="hidden" name="id_estudiante" value="<?= $est['id_estudiante'] ?>">
-                                      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro desea eliminar este estudiante?')">
-                                          Eliminar
-                                      </button>
-                                  </form>
-                              </td>
-                          </tr>
-                          <!-- Modal EDITAR -->
-                          <div class="modal fade" id="modalEditar<?= $est['id_estudiante'] ?>" tabindex="-1">
-                              <div class="modal-dialog">
-                              <form class="modal-content" action="actualizar_estudiante.php" method="POST" enctype="multipart/form-data">
-                                  <div class="modal-header" style="background: var(--color-primario);">
-                                      <h5 class="modal-title">Editar Estudiante</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                  </div>
-                                  <div class="modal-body" style="background: var(--color-secundario);">
-                                      <input type="hidden" name="id_estudiante" value="<?= $est['id_estudiante'] ?>">
-                                      <div class="mb-3">
-                                          <label>Documento</label>
-                                          <input type="text" name="cod_estudiante" class="form-control" value="<?= htmlspecialchars($est['cod_estudiante']) ?>" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label>Nombre</label>
-                                          <input type="text" name="nom_estudiante" class="form-control" value="<?= htmlspecialchars($est['nom_estudiante']) ?>" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label>Teléfono</label>
-                                          <input type="text" name="tel_estudiante" class="form-control" value="<?= htmlspecialchars($est['tel_estudiante']) ?>" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label>Email</label>
-                                          <input type="email" name="email_estudiante" class="form-control" value="<?= htmlspecialchars($est['email_estudiante']) ?>" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label>Foto Actual</label><br>
-                                          <img src="<?= htmlspecialchars($est['foto_estudiante']) ?>" width="80" class="rounded mb-2"><br>
-                                          <label>Cambiar Foto</label>
-                                          <input type="hidden" name="foto_estudiante_actual" value="<?= htmlspecialchars($est['foto_estudiante']) ?>">
-                                      <div class="mb-3">
-                                            <label>Foto Actual</label><br>
-                                            <img src="<?= htmlspecialchars($est['foto_estudiante']) ?>" width="80" class="rounded mb-2"><br>
-                                            <label>Cambiar Foto (opcional)</label>
-                                            <input type="file" name="foto_estudiante" class="form-control" accept="image/*">
-                                      </div>
-                                  </div>
-                                  <div class="modal-footer" style="background: var(--color-acentos);">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                      <button type="submit" class="btn btn-pastel" onclick="return confirm('¿Desea actualizar esta información?')">Guardar Cambios</button>
-                                  </div>
-                              </form>
-                              </div>
-                          </div>
-                      <?php endforeach; ?>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-
+ 
 
 
    
     
 
-    <!--fin formulario de Registro-->
+                        <!--fin formulario de Registro-->
 
     <br><br>
 <!--Inicio Footer-->

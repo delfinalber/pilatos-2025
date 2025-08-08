@@ -103,41 +103,7 @@
 
     <br><br>
     <!--Formulario de Registro-->
-    <div class="container mt-5">
-        <div class="card card-pastel">
-            <div class="card-body">
-                <h3 class="card-title text-center mb-4">Registro de Estudiante Tecnico Superior</h3>
-                <?php if(isset($_SESSION['message'])): ?>
-                    <div class="alert alert-success"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
-                <?php endif; ?>
-                <form action="guardar_estudiante.php" method="POST" enctype="multipart/form-data" autocomplete="off">
-                    <!-- id_estudiante oculto, lo asigna la BD -->
-                    <div class="mb-3">
-                        <label for="cod_estudiante" class="form-label">Documento de Identidad</label>
-                        <input type="text" class="form-control" name="cod_estudiante" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nom_estudiante" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="nom_estudiante" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tel_estudiante" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" name="tel_estudiante" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email_estudiante" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email_estudiante" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="foto_estudiante" class="form-label">Foto</label>
-                        <input type="file" class="form-control" accept="image/*" name="foto_estudiante" required>
-                    </div>
-                    <button type="submit" class="btn btn-pastel w-100">Registrar</button>
-                    <button type="onclick" onclick="window.location.href='edi_estudiantes.php'" class="btn btn-pastel w-100">Listar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 
     <!--fin formulario de Registro-->
 

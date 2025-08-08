@@ -60,31 +60,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Foto: opcional solo en edición, obligatoria en registro, valida tipo y tamaño (máx 2MB)
-            const fotoInput = form.querySelector('input[name="foto_estudiante"]');
-            if (fotoInput) {
-                const esRegistro = form.getAttribute('action') && form.getAttribute('action').includes('guardar_estudiante');
-                if (esRegistro && !fotoInput.value) {
-                    valido = false;
-                    mensajes.push('Debe seleccionar una foto.')};
-                const esEdicion = form.getAttribute('action') && form.getAttribute('action').includes('edi_estudiantes');
-                if (esEdicion && fotoInput.value) {
-                    const foto = fotoInput.files[0];
-                    if (foto.size > 2 * 1024 * 1024) {
-                        valido = false;
-                        mensajes.push('La foto debe tener un peso máximo de 2MB.');
-                        fotoInput.classList.add('is-invalid');
-                    } else {
-                        fotoInput.classList.remove('is-invalid');
-                    }
-                    if (foto.type !== 'image/jpeg' && foto.type !== 'image/png') {
-                        valido = false;
-                        mensajes.push('La foto debe ser en formato JPEG o PNG.');
-                        fotoInput.classList.add('is-invalid');
-                    } else {
-                        fotoInput.classList.remove('is-invalid');
-                    }
-                }
+
+            // Aquí puedes agregar la validación de la foto si es necesario
+
+            // Si hay mensajes de error, evita el envío y muestra los mensajes
+            if (!valido) {
+                e.preventDefault();
+                alert(mensajes.join('\n'));
+                return false;
             }
+
+            // Marca el formulario como enviado para prevenir doble envío
+            form.classList.add('enviado');
         });
     });
 });
