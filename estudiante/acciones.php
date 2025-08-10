@@ -102,4 +102,5 @@ if ($accion === 'actualizar') {
         exit;
     }
 }
+
 ?>

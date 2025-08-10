@@ -10,7 +10,7 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
        
-    <link rel="stylesheet" href="css/app.css">
+    
 
     
 </head>
@@ -54,8 +54,8 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link " href="../index.html"   aria-expanded="false">
-                     INICIO
+                    <a class="nav-link " href="../estudiante/registro_estudiante.php"   aria-expanded="false">
+                    ESTUDIANTE
                     </a>
                     
                   </li>
@@ -120,7 +120,7 @@ $where = $buscar ? "WHERE cod_estudiante=".$buscar : '';
 $rows = $mysqli->query("SELECT * FROM estudiante $where ORDER BY id_estudiante DESC");
 function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 ?>
-
+<link rel="stylesheet" href="css/app.css">
 <header class="header py-3 shadow-sm">
   <div class="container">
     <h1 class="h4 mb-0">Gestión de Estudiantes</h1>
@@ -236,6 +236,8 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                       data-email="<?php echo esc($r['email_estudiante']); ?>"
                       data-tel="<?php echo esc($r['tel_estudiante']); ?>"
                       data-foto="<?php echo esc($r['foto_estudiante']); ?>"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalEditar"
                       >Editar</button>
                       </td>
                       </tr>
@@ -253,7 +255,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                   <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <form class="modal-content" id="formEditar" method="post" action="acciones.php" enctype="multipart/form-data" autocomplete="off" style="background-color: #fff; border-radius: 0.5rem;">
-                    <input type="hidden" name="accion" value="editar">
+                    <input type="hidden" name="accion" value="actualizar"> <!-- Cambia 'editar' por 'actualizar' -->
                     <input type="hidden" name="id_estudiante" id="edit_id_estudiante">
                     <input type="hidden" name="redirect" value="registro_estudiante.php">
                     <div class="modal-header" style="background-color: #0d6efd; color: #fff;">

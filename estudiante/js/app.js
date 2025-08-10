@@ -1,3 +1,6 @@
+import '../css/registro_estudiante.css';
+import '../css/app.css';
+
 /*
  * Copyright (c) 2025 . All rights reserved.
  */
@@ -20,6 +23,12 @@
     tel.setCustomValidity(tel.value.length<7 ? 'Min. 7 dígitos' : '');
   });
 
+  // Email input: validación básica
+  const email = document.querySelector('input[name="email_estudiante"]');
+  email?.addEventListener('input', () => {
+    email.setCustomValidity(email.validity.typeMismatch ? 'Formato de email inválido' : '');
+  });
+  
   // Código estudiante: sólo dígitos, máximo 11
   const cod = document.querySelector('input[name="cod_estudiante"]');
   cod?.addEventListener('input', () => {
@@ -44,37 +53,41 @@
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
-                  var modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
-                  document.querySelectorAll('.btn-editar').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                      document.getElementById('edit_id_estudiante').value = btn.getAttribute('data-id');
-                      document.getElementById('edit_cod_estudiante').value = btn.getAttribute('data-cod');
-                      document.getElementById('edit_nom_estudiante').value = btn.getAttribute('data-nom');
-                      document.getElementById('edit_email_estudiante').value = btn.getAttribute('data-email');
-                      document.getElementById('edit_tel_estudiante').value = btn.getAttribute('data-tel');
-                      var foto = btn.getAttribute('data-foto');
-                      var fotoDiv = document.getElementById('edit_foto_actual');
-                      if(foto){
-                        fotoDiv.innerHTML = '<img src="'+foto+'" class="img-mini mb-2" alt="Foto actual">';
-                      } else {
-                        fotoDiv.innerHTML = '';
-                      }
-                      modalEditar.show();
-                    });
-                  });
+    var modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
+    document.querySelectorAll('.btn-editar').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.getElementById('edit_id_estudiante').value = btn.getAttribute('data-id');
+            document.getElementById('edit_cod_estudiante').value = btn.getAttribute('data-cod');
+            document.getElementById('edit_nom_estudiante').value = btn.getAttribute('data-nom');
+            document.getElementById('edit_email_estudiante').value = btn.getAttribute('data-email');
+            document.getElementById('edit_tel_estudiante').value = btn.getAttribute('data-tel');
+            var foto = btn.getAttribute('data-foto');
+            var fotoDiv = document.getElementById('edit_foto_actual');
+            if(foto){
+                fotoDiv.innerHTML = '<img src="'+foto+'" class="img-mini mb-2" alt="Foto actual">';
+            } else {
+                fotoDiv.innerHTML = '';
+            }
+            modalEditar.show();
+        });
+    });
 
-                  // Al enviar el formulario de edición, limpiar cache e historial y redirigir
-                  document.getElementById('formEditar').addEventListener('submit', function() {
-                    // Permitir el envío normal del formulario (POST a acciones.php)
-                    // Cuando acciones.php termine, debe hacer:
-                    // header("Location: registro_estudiante.php");
-                    // exit;
-                    // Para limpiar el historial y cache al regresar, puedes usar este script en registro_estudiante.php:
-                    if (window.performance && window.performance.getEntriesByType) {
-                      const navEntries = window.performance.getEntriesByType('navigation');
-                      if (navEntries.length > 0 && navEntries[0].type === 'back_forward') {
-                        window.location.reload(true);
-                      }
-                    }
-                  });
-                });
+    // Al enviar el formulario de edición, actualizar estudiante vía AJAX y redirigir
+    document.getElementById('formEditar').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = e.target;
+        var formData = new FormData(form);
+
+        fetch('acciones.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(resp => resp.ok ? resp.text() : Promise.reject('Error en la actualización'))
+        .then(() => {
+            window.location.href = 'registro_estudiante.php';
+        })
+        .catch(err => {
+            alert('No se pudo actualizar el estudiante: ' + err);
+        });
+    });
+});
