@@ -1,0 +1,20 @@
+/*
+ * Copyright (c) 2025 . All rights reserved.
+ */
+
+:root{
+  --c1:#ABBCDA;  /* lila suave */
+  --c2:#FFFFFF;  /* blanco */
+  --c3:#415D8A;  /* azul profundo */
+  --c4:#D0E1F5;  /* celeste */
+}
+body{ background: linear-gradient(90deg,var(--c4) 0%, var(--c2) 100%); }
+.header{ background: var(--c3); color:#fff; }
+.card-form{ background: var(--c1); border:0; color:#0f1a2b; }
+.btn-primary{ background: var(--c3); border-color: var(--c3); }
+.btn-outline-primary{ color: var(--c3); border-color: var(--c3); }
+.btn-outline-primary:hover{ background: var(--c3); color:#fff; }
+.table thead{ background: var(--c4); }
+.sidebar{ position: sticky; top: 1rem; }
+a{text-decoration:none}
+.img-mini{ width:42px;height:42px;object-fit:cover;border-radius:6px;border:1px solid #dfe7f6; }
