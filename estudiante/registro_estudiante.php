@@ -253,47 +253,47 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 
                   <!-- Modal Editar Estudiante -->
                   <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <form class="modal-content" id="formEditar" method="post" action="acciones.php" enctype="multipart/form-data" autocomplete="off" style="background-color: #fff; border-radius: 0.5rem;">
-                    <input type="hidden" name="accion" value="actualizar"> <!-- Cambia 'editar' por 'actualizar' -->
-                    <input type="hidden" name="id_estudiante" id="edit_id_estudiante">
-                    <input type="hidden" name="redirect" value="registro_estudiante.php">
-                    <div class="modal-header" style="background-color: #0d6efd; color: #fff;">
-                    <h5 class="modal-title" id="modalEditarLabel">Editar Estudiante</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body" style="background-color: #f8f9fa;">
-                    <div class="mb-2">
-                    <label class="form-label" style="color: #0d6efd;">Código estudiante</label>
-                    <input type="number" class="form-control" name="cod_estudiante" id="edit_cod_estudiante" maxlength="11" required>
-                    </div>
-                    <div class="mb-2">
-                    <label class="form-label" style="color: #0d6efd;">Nombre</label>
-                    <input type="text" class="form-control" name="nom_estudiante" id="edit_nom_estudiante" required>
-                    </div>
-                    <div class="mb-2">
-                    <label class="form-label" style="color: #0d6efd;">Email</label>
-                    <input type="email" class="form-control" name="email_estudiante" id="edit_email_estudiante" required>
-                    </div>
-                    <div class="mb-2">
-                    <label class="form-label" style="color: #0d6efd;">Teléfono</label>
-                    <input type="tel" class="form-control" name="tel_estudiante" id="edit_tel_estudiante" minlength="7" maxlength="12" required>
-                    </div>
-                    <div class="mb-3">
-                    <label class="form-label" style="color: #0d6efd;">Foto (se guardará la ruta)</label>
-                    <input type="file" class="form-control" name="foto_estudiante" id="edit_foto_estudiante" accept="image/*">
-                    <div class="form-text">Se almacena en img/fotos</div>
-                    <div id="edit_foto_actual" class="mt-2"></div>
-                    </div>
-                    </div>
-                    <div class="modal-footer" style="background-color: #f8f9fa;">
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                    </form>
-                  </div>
-                  </div>
-                  <!-- Fin Modal Editar Estudiante -->
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="formEditar" method="post" action="acciones.php" enctype="multipart/form-data" autocomplete="off" style="background-color: #fff; border-radius: 0.5rem;">
+      <input type="hidden" name="accion" value="actualizar">
+      <input type="hidden" name="id_estudiante" id="edit_id_estudiante">
+      <input type="hidden" name="redirect" value="registro_estudiante.php">
+      <div class="modal-header" style="background-color: #0d6efd; color: #fff;">
+        <h5 class="modal-title" id="modalEditarLabel">Editar Estudiante</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" style="background-color: #f8f9fa;">
+        <div class="mb-2">
+          <label class="form-label" style="color: #0d6efd;">Código estudiante</label>
+          <input type="number" class="form-control" name="cod_estudiante" id="edit_cod_estudiante" maxlength="11" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label" style="color: #0d6efd;">Nombre</label>
+          <input type="text" class="form-control" name="nom_estudiante" id="edit_nom_estudiante" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label" style="color: #0d6efd;">Email</label>
+          <input type="email" class="form-control" name="email_estudiante" id="edit_email_estudiante" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label" style="color: #0d6efd;">Teléfono</label>
+          <input type="tel" class="form-control" name="tel_estudiante" id="edit_tel_estudiante" minlength="7" maxlength="12" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" style="color: #0d6efd;">Foto (se guardará la ruta)</label>
+          <input type="file" class="form-control" name="foto_estudiante" id="edit_foto_estudiante" accept="image/*">
+          <div class="form-text">Se almacena en img/fotos</div>
+          <div id="edit_foto_actual" class="mt-2"></div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: #f8f9fa;">
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Fin Modal Editar Estudiante -->
 
                   </div>
                   </div>
