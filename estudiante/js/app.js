@@ -51,7 +51,7 @@ import '../css/app.css';
     history.replaceState({}, '', location.pathname);
   }
 })();
-
+// Carga información en el modal editar
 document.addEventListener('DOMContentLoaded', function() {
     var modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
     document.querySelectorAll('.btn-editar').forEach(function(btn) {
