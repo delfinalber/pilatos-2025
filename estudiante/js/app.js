@@ -91,3 +91,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// (Eliminado: El código HTML del modal debe estar en el archivo HTML, no en el archivo JS)
