@@ -267,7 +267,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                     }
                     ?>
                     <form class="modal-content" id="formEditar" method="post" action="acciones.php" enctype="multipart/form-data" autocomplete="off" style="background-color: #fff; border-radius: 0.5rem;">
-                      <input type="hidden" name="id_estudiante" id="edit_id_estudiante" value="<?php echo isset($editData['id_estudiante']) ? esc($editData['id_estudiante']) : ''; ?>">
+                      <input type="hidden" name="id_estudiante" id="id_estudiante" value="<?php echo isset($editData['id_estudiante']) ? esc($editData['id_estudiante']) : ''; ?>">
                       <input type="hidden" name="id_estudiante" id="id_estudiante" value="<?php echo $editData ? esc($editData['id_estudiante']) : ''; ?>">
                       <input type="hidden" name="redirect" value="registro_estudiante.php">
                       <div class="modal-header" style="background-color: #0d6efd; color: #fff;">
@@ -277,95 +277,22 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                       <div class="modal-body" style="background-color: #f8f9fa;">
                       <div class="mb-2">
                         <label class="form-label" style="color: #0d6efd;">Código estudiante</label>
-                        <input type="number" class="form-control" name="cod_estudiante" id="edit_cod_estudiante" maxlength="11" required value="<?php echo $editData ? esc($editData['cod_estudiante']) : ''; ?>">
+                        <input type="number" class="form-control" name="cod_estudiante" id="cod_estudiante" maxlength="11" required value="<?php echo $editData ? esc($editData['cod_estudiante']) : ''; ?>">
                       </div>
                       <div class="mb-2">
                         <label class="form-label" style="color: #0d6efd;">Email</label>
-                        <input type="email" class="form-control" name="email_estudiante" id="edit_email_estudiante" required value="<?php echo $editData ? esc($editData['email_estudiante']) : ''; ?>">
+                        <input type="email" class="form-control" name="email_estudiante" id="email_estudiante" required value="<?php echo $editData ? esc($editData['email_estudiante']) : ''; ?>">
                       </div>
                       <div class="mb-2">
                         <label class="form-label" style="color: #0d6efd;">Nombre</label>
-                        <input type="text" class="form-control" name="nom_estudiante" id="edit_nom_estudiante" required value="<?php echo $editData ? esc($editData['nom_estudiante']) : ''; ?>">
+                        <input type="text" class="form-control" name="nom_estudiante" id="nom_estudiante" required value="<?php echo $editData ? esc($editData['nom_estudiante']) : ''; ?>">
                       </div>
                       
                       <div class="mb-2">
                         <label class="form-label" style="color: #0d6efd;">Teléfono</label>
-                        <input type="tel" class="form-control" name="tel_estudiante" id="edit_tel_estudiante" minlength="7" maxlength="12" required value="<?php echo $editData ? esc($editData['tel_estudiante']) : ''; ?>">
+                        <input type="tel" class="form-control" name="tel_estudiante" id="tel_estudiante" minlength="7" maxlength="12" required value="<?php echo $editData ? esc($editData['tel_estudiante']) : ''; ?>">
                       </div>
                       <div class="mb-3">
                         <label class="form-label" style="color: #0d6efd;">Foto (se guardará la ruta)</label>
-                        <input type="file" class="form-control" name="foto_estudiante" id="edit_foto_estudiante" accept="image/*">
-                        <div class="form-text">Se almacena en img/fotos</div>
-                        <div id="edit_foto_actual">
-                          <?php if(!empty($editData['foto_estudiante'])): ?>
-                            <img src="<?php echo esc($editData['foto_estudiante']); ?>" class="img-mini" alt="">
-                          <?php else: ?>—<?php endif; ?>
-                        </div>
-                      </div>
-                      </div>
-                      <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                      </div>
-                    </form>
-                    </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<footer class="bg-light py-3">
-  <div class="container text-center">
-    <p class="mb-0">&copy; <?php echo date('Y'); ?> Pilatos. Todos los derechos reservados.</p>
-  </div>
-</footer>
-
-<script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
-<script src="js/app.js"></script>
-<script>
-// Función para establecer los datos en el modal de edición
-function setEditModalData(button) {
-  var row = button.closest('tr');
-  var id = row.querySelector('td:nth-child(1)').innerText;
-  var cod = row.querySelector('td:nth-child(2)').innerText;
-  var nom = row.querySelector('td:nth-child(3)').innerText;
-  var email = row.querySelector('td:nth-child(4)').innerText;
-  var tel = row.querySelector('td:nth-child(5)').innerText;
-  var foto = row.querySelector('td:nth-child(6) img') ? row.querySelector('td:nth-child(6) img').src : '';
-
-  document.getElementById('edit_id_estudiante').value = id;
-  document.getElementById('edit_cod_estudiante').value = cod;
-  document.getElementById('edit_nom_estudiante').value = nom;
-  document.getElementById('edit_email_estudiante').value = email;
-  document.getElementById('edit_tel_estudiante').value = tel;
-  document.getElementById('edit_foto_estudiante').value = foto;
-}
-
-// Validación personalizada para el formulario
-(function() {
-  'use strict'
-  var forms = document.querySelectorAll('.needs-validation')
-  Array.prototype.slice.call(forms)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
-</script>
-
-</body>
-</html>
+                        <input type="file" class="form-control" name="foto_estudiante" id="foto_estudiante" accept="image/*">
+                        <div class="form-text">Se almacena in
