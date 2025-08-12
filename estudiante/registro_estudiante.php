@@ -238,11 +238,25 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                       data-foto="<?php echo esc($r['foto_estudiante']); ?>"
                       data-bs-toggle="modal"
                       data-bs-target="#modalEditar"
-                      onclick="setEditModalData(this)"
-                      >Editar</button>
-                      </td>
-                      </tr>
-                    <?php endwhile; ?>
+                                          onclick="setEditModalData(this)"
+                                          >Editar</button>
+                                          </td>
+                                          </tr>
+                                        <?php endwhile; ?>
+                    <script>
+                    function setEditModalData(btn) {
+                      // Get data attributes from the clicked button
+                      document.getElementById('id_estudiante').value = btn.getAttribute('data-id');
+                      document.getElementById('cod_estudiante').value = btn.getAttribute('data-cod');
+                      document.getElementById('nom_estudiante').value = btn.getAttribute('data-nom');
+                      document.getElementById('email_estudiante').value = btn.getAttribute('data-email');
+                      document.getElementById('tel_estudiante').value = btn.getAttribute('data-tel');
+                      // Foto input cannot be set for security reasons, so leave it empty
+                      // Show the modal (Bootstrap 5)
+                      var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+                      modal.show();
+                    }
+                    </script>
                     <?php else: ?>
                     <tr><td colspan="8" class="text-center">Sin registros</td></tr>
                     <?php endif; ?>
