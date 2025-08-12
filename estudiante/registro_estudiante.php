@@ -309,6 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script ></script>
 <footer class="text-center text-lg-start bg-body-tertiary"  >
   <!-- Section: Social media -->
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom" style="background-color:darkgray;">
@@ -441,6 +442,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <!-- Copyright -->
 </footer>
-
+<script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
+<script src="./js/app.js"></script>
 </body>
 </html>

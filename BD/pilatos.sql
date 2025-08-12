@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-08-2025 a las 01:51:15
+-- Tiempo de generación: 12-08-2025 a las 17:18:27
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,9 +42,11 @@ CREATE TABLE `estudiante` (
 --
 
 INSERT INTO `estudiante` (`id_estudiante`, `cod_estudiante`, `email_estudiante`, `nom_estudiante`, `tel_estudiante`, `foto_estudiante`, `fecha`) VALUES
-(6, 12895432, 'juanignacio@gmail.com', 'Jose Ignacio Silva', '212334444', 'img/fotos/est_12895432_1754867600.png', '2025-08-10 22:11:21'),
 (7, 2147483647, 'oscarcordoba@gmail.com', 'OSCAR JAVIER CORDOBA MUÑOZ', '312098765', 'img/fotos/est_4536782992_1754864892.jpeg', '2025-08-10 22:28:12'),
-(8, 23456789, 'sandoval@gmail.com', 'SANTIAGO SANDINO SANDOVAL PASTRANA', '323456787', 'img/fotos/est_23456789_1754867466.png', '2025-08-10 22:47:56');
+(8, 23456789, 'sandoval@gmail.com', 'SANTIAGO SANDINO SANDOVAL PASTRANA', '323456787', 'img/fotos/est_23456789_1755009797.jpg', '2025-08-10 22:47:56'),
+(9, 1079177484, 'paulasofia08@gmail.com', 'PAULA SOFIA CLAROS NAÑEZ', '3108344128', 'img/fotos/est_1079177484_1755000722.jpg', '2025-08-12 12:12:02'),
+(11, 1133313051, 'ramirezfierro34@gmail.com', 'SAMUEL SANTIAGO RAMIREZ FIERRO', '3203150231', 'img/fotos/est_1133313051_1755010278.png', '2025-08-12 14:51:18'),
+(12, 1079175634, 'casanovaortizdaniela@gmail.com', 'DANIELA CASANOCA', '3114203191', 'img/fotos/est_1079175634_1755011702.png', '2025-08-12 14:56:00');
 
 -- --------------------------------------------------------
 
@@ -128,7 +130,7 @@ ALTER TABLE `sesion`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_sale`
