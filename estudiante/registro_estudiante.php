@@ -240,15 +240,16 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                                           </td>
                                           </tr>
                                         <?php endwhile; ?>
-                    <!-- El JS para el modal editar está en app.js -->
-                    <?php else: ?>
-                    <tr><td colspan="8" class="text-center">Sin registros</td></tr>
-                    <?php endif; ?>
-                    </tbody>
-                    </table>
-                    </div>
-                  </div>
-                  </div>
+                                      <!-- El JS para el modal editar está en app.js -->
+                                      <?php else: ?>
+                                      <tr><td colspan="8" class="text-center">Sin registros</td></tr>
+                                      <?php endif; ?>
+                                      </tbody>
+                                      </table>
+                                      </div>
+                                    </div>
+                                    </div>
+                  <!-- El JS para el modal editar está en js/app.js -->
 
                   <!-- Modal Editar Estudiante -->
                   <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
