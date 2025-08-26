@@ -4,7 +4,7 @@ import '../css/app.css';
 /*
  * Copyright (c) 2025 . All rights reserved.
  */
-
+// Validación del formulario
 (() => {
   'use strict';
   // Bootstrap validation
@@ -15,7 +15,7 @@ import '../css/app.css';
       form.classList.add('was-validated');
     });
   });
-
+ //Validación del input telefono, formato ingreso números y máximo 12 dígitos minimo 7 digitos
   // Tel input: solo dígitos y máximo 12, min 7
   const tel = document.querySelector('input[name="tel_estudiante"]');
   tel?.addEventListener('input', () => {
@@ -28,21 +28,22 @@ import '../css/app.css';
   email?.addEventListener('input', () => {
     email.setCustomValidity(email.validity.typeMismatch ? 'Formato de email inválido' : '');
   });
-  
+
+  //Validación del input código estudiante, formato ingreso números y máximo 11 dígitos
   // Código estudiante: sólo dígitos, máximo 11
   const cod = document.querySelector('input[name="cod_estudiante"]');
   cod?.addEventListener('input', () => {
     cod.value = cod.value.replace(/\D/g,'').slice(0,11);
     cod.setCustomValidity(cod.value?'':'Requerido');
   });
-
+  
   // Confirmar eliminación
   document.addEventListener('click', e => {
     const a = e.target.closest('[data-confirm]');
     if (a && !confirm(a.getAttribute('data-confirm')))
       e.preventDefault();
   });
-
+ // limpiar formulario cuando se envia información siempre y cuando cumpla con todas las validaciones de los input
   // Limpiar form tras éxito ?ok=1
   const params = new URLSearchParams(location.search);
   if (params.get('ok') === '1') {
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     var form = e.target;
     var formData = new FormData(form);
-
+//Envia la información el modal por metodo POST
     fetch('acciones.php', {
       method: 'POST',
       body: formData

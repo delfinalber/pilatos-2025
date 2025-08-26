@@ -1,3 +1,6 @@
+/*
+*Siempre se inicia llamando la conexion de php o sesion a la base de datos
+*/
 <?php
 session_start();
 $flash = $_SESSION['flash'] ?? '';
@@ -163,6 +166,9 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                 </tr>
               </thead>
               <tbody>
+                /*
+                *Se lista información en la tabla, se muestran los registros de los estudiantes
+                */
               <?php if($rows && $rows->num_rows): ?>
                 <?php while($r=$rows->fetch_assoc()): ?>
                   <tr>
@@ -172,15 +178,23 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
                     <td><?php echo esc($r['email_estudiante']); ?></td>
                     <td><?php echo esc($r['tel_estudiante']); ?></td>
                     <td>
+                      /*
+                      *Se lista la imagen correspondiente al id_estudiante
+                      */
                       <?php if(!empty($r['foto_estudiante'])): ?>
                         <img src="<?php echo esc($r['foto_estudiante']); ?>" class="img-mini" alt="">
                       <?php else: ?>—<?php endif; ?>
                     </td>
                     <td><?php echo isset($r['fecha']) ? esc($r['fecha']) : ''; ?></td>
+                    /*
+                    *Boton eliminar, segun el id_estudiante, envia confirmación si desea eliminar el registro
+                    */
                     <td class="text-end">
                       <a href="acciones.php?accion=eliminar&id=<?php echo $r['id_estudiante']; ?>&redirect=registro_estudiante.php"
                          class="btn btn-sm btn-danger" data-confirm="¿Eliminar este registro?">Eliminar</a>
-
+                        /*
+                        *Boton editar, los datos que debe mostrar en el modal, la información se imprime de la tabla estudiante
+                        */
                       <button
                         type="button"
                         class="btn btn-sm btn-warning btn-editar"
