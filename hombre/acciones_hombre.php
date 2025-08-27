@@ -42,30 +42,21 @@ function guardarFoto($cod,$file){
 }
 # acciones para el registro nuevo de un estudiante
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
-$redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_hombre.php';
+$redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_estudiante.php';
 # recibir información del formulario registro aprendiz
 if ($accion==='crear') {
-  $cod_hombre = intval($_POST['cod_hombre'] ?? 0);
-  $ruta1 = guardarFoto($cod_hombre, $_FILES['foto1_hombre'] ?? []);
-  $ruta2 = guardarFoto($cod_hombre, $_FILES['foto2_hombre'] ?? []);
-  $ruta3 = guardarFoto($cod_hombre, $_FILES['foto3_hombre'] ?? []);
-  $ruta4 = guardarFoto($cod_hombre, $_FILES['foto4_hombre'] ?? []);
-  $nom_produc_hombre = trim($_POST['nom_produc_hombre'] ?? '');
-  $descripcion_hombre = trim($_POST['descripcion_hombre'] ?? '');
-  $precio_hombre = trim($_POST['precio_hombre] ?? '');
-
-  
-
-
-
-
-
-
-
-  
-
- #insertar a la tabla hombre
-  $stmt = db()->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precion_hombre) VALUES (?,?,?,?,?,?,?,?)");
+  $cod = intval($_POST['cod_estudiante'] ?? 0);
+  $email = trim($_POST['email_estudiante'] ?? '');
+  $nom = trim($_POST['nom_estudiante'] ?? '');
+  $tel = preg_replace('/\D/','', $_POST['tel_estudiante'] ?? '');
+  $ruta = guardarFoto($cod, $_FILES['foto_estudiante'] ?? []);
+  #  validación de que los campos cumpla con los requerimientos de javascript
+  if ($cod<=0 || $nom==='' || strlen($tel)<7 || !filter_var($email,FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['flash']='Datos inválidos.';
+    header('Location: '.$redirect); exit;
+  }
+ #insertar a la tabla estudiantes
+  $stmt = db()->prepare("INSERT INTO estudiante (cod_estudiante,email_estudiante,nom_estudiante,tel_estudiante,foto_estudiante) VALUES (?,?,?,?,?)");
   // cod:int, email:str, nom:str, tel:str, ruta:str
   $stmt->bind_param('issss',$cod,$email,$nom,$tel,$ruta);
   if($stmt->execute()){

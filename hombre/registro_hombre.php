@@ -76,7 +76,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 
 <header class="header py-3 shadow-sm">
   <div class="container">
-    <h1 class="h4 mb-0">Gestión de Estudiantes</h1>
+    <h1 class="h4 mb-0">Gestión de Hombre</h1>
   </div>
 </header>
 
@@ -93,18 +93,38 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
     <div class="col-12 col-lg-4">
       <div class="card card-form shadow sidebar">
         <div class="card-body">
-          <h2 class="h5 mb-3">Nuevo estudiante</h2>
-          <form id="formCrear" class="needs-validation" novalidate action="acciones.php" method="post" enctype="multipart/form-data" autocomplete="off">
+          <h2 class="h5 mb-3">Nuevo hombre</h2>
+          <form id="formCrear" class="needs-validation" novalidate action="acciones_hombre.php" method="post" enctype="multipart/form-data" autocomplete="off">
             <input type="hidden" name="accion" value="crear">
-            <input type="hidden" name="redirect" value="registro_estudiante.php">
+            <input type="hidden" name="redirect" value="registro_hombre.php">
             <div class="mb-2">
-              <label class="form-label">Código estudiante</label>
-              <input type="number" class="form-control" name="cod_estudiante" maxlength="11" required>
+              <label class="form-label">Código hombre</label>
+              <input type="number" class="form-control" name="cod_hombre" maxlength="11" required>
               <div class="invalid-feedback">Ingrese el código (numérico).</div>
             </div>
+            <div class="mb-3">
+              <label class="form-label">Foto1 (se guardará la ruta)</label>
+              <input type="file" class="form-control" name="foto_hombre1" accept="image/*">
+              <div class="form-text">Se almacena en img/fotos</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Foto2 (se guardará la ruta)</label>
+              <input type="file" class="form-control" name="foto_hombre2" accept="image/*">
+              <div class="form-text">Se almacena en img/fotos</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Foto3 (se guardará la ruta)</label>
+              <input type="file" class="form-control" name="foto_hombre3" accept="image/*">
+              <div class="form-text">Se almacena en img/fotos</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Foto4 (se guardará la ruta)</label>
+              <input type="file" class="form-control" name="foto_hombre4" accept="image/*">
+              <div class="form-text">Se almacena en img/fotos</div>
+            </div>
             <div class="mb-2">
-              <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nom_estudiante" required>
+              <label class="form-label">Nombre Producto</label>
+              <input type="text" class="form-control" name="nom__produc_hombre" required>
               <div class="invalid-feedback">Ingrese el nombre.</div>
             </div>
             <div class="mb-2">
