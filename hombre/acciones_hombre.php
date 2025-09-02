@@ -62,6 +62,10 @@ if ($accion==='crear') {
   $stmt = db()->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precio_hombre) VALUES (?,?,?,?,?,?,?,?)");
   // cod:int, ruta1:str, ruta2:str, ruta3:str, ruta4:str, nom:str, descripcion:str, precio:str
   $stmt->bind_param('isssssss',$cod,$ruta1,$ruta2,$ruta3,$ruta4,$nom,$descripcion,$precio);
+  // Validar que al menos una imagen haya sido subida, si no, asignar una imagen por defecto
+  if(!$ruta1 && !$ruta2 && !$ruta3 && !$ruta4){
+    $ruta1 = 'img/fotos/default.png'; // Asegúrate de tener esta imagen en el directorio correspondiente
+  }
   if($stmt->execute()){
     #si todos los campos estan llenos se envia o registra la información
     $_SESSION['flash']='Registro completado correctamente.';
@@ -99,6 +103,10 @@ if ($accion==='eliminar') {
 if ($accion === 'actualizar') {
   $id = intval($_POST['id_hombre'] ?? 0);
   $cod = intval($_POST['cod_hombre'] ?? 0);
+  $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []);
+  $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []);
+  $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []);
+  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);
   $nom = trim($_POST['nom_produc_hombre'] ?? '');
   $descripcion = trim($_POST['descripcion_hombre'] ?? '');
   $precio = trim($_POST['precio_hombre'] ?? '');

@@ -155,7 +155,7 @@ Si no subiste imágenes, se muestra una imagen por defecto.
 
 ### `acciones_hombre.php`
 - Lógica de creación, edición y eliminación
-- Manejo de archivos de imagen
+- Maceio de archivos de imagen
 - Validaciones de datos
 
 ### `app_hombre.js`

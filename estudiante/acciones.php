@@ -50,7 +50,7 @@ if ($accion==='crear') {
   $tel = preg_replace('/\D/','', $_POST['tel_estudiante'] ?? '');
   $ruta = guardarFoto($cod, $_FILES['foto_estudiante'] ?? []);
   #  validación de que los campos cumpla con los requerimientos de javascript
-  if ($cod<=0 || $nom==='' || strlen($tel)<7 || !filter_var($email,FILTER_VALIDATE_EMAIL)) {
+  if ($cod<=0 || $nom==='' || strlen($$tel)<7 || !filter_var($email,FILTER_VALIDATE_EMAIL)) {
     $_SESSION['flash']='Datos inválidos.';
     header('Location: '.$redirect); exit;
   }

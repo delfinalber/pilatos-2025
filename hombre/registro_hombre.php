@@ -175,7 +175,8 @@ $rows = $mysqli->query("SELECT * FROM hombre $where ORDER BY id_hombre DESC");
                   <th>Imagen 4</th>
                   <th>Nombre</th>
                   <th>Descripcion</th>
-                  <th>Precio</th>                  
+                  <th>Precio</th>  
+                  <th>Fecha</th>                
                   <th class="text-end">Acciones</th>
                 </tr>
               </thead>
@@ -212,7 +213,8 @@ $rows = $mysqli->query("SELECT * FROM hombre $where ORDER BY id_hombre DESC");
                     </td>
                     <td><?php echo esc($r['nom_produc_hombre']); ?></td>
                     <td><?php echo esc($r['descripcion_hombre']); ?></td>
-                    <td><?php echo esc($r['precio_hombre']); ?></td>            
+                    <td><?php echo esc($r['precio_hombre']); ?></td>
+                    <td><?php echo isset($r['fecha']) ? esc($r['fecha']) : ''; ?></td>            
                    
                     <td class="text-end">
                       <a href="acciones_hombre.php?accion=eliminar&id_hombre=<?php echo $r['id_hombre']; ?>&redirect=registro_hombre.php"
