@@ -3,10 +3,10 @@
 session_start();
 
 # datos de conexión
-const DB_HOST='localhost';
-const DB_USER='root';
-const DB_PASS='';
-const DB_NAME='pilatos';
+define('DB_HOST','localhost');
+define('DB_USER','root');
+define('DB_PASS','');
+define('DB_NAME','pilatos');
 
 # Función conexión a la base de datos
 function db(){
@@ -42,23 +42,26 @@ function guardarFoto($cod,$file){
 }
 # acciones para el registro nuevo de un estudiante
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
-$redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_estudiante.php';
+$redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_hombre.php';
 # recibir información del formulario registro aprendiz
 if ($accion==='crear') {
-  $cod = intval($_POST['cod_estudiante'] ?? 0);
-  $email = trim($_POST['email_estudiante'] ?? '');
-  $nom = trim($_POST['nom_estudiante'] ?? '');
-  $tel = preg_replace('/\D/','', $_POST['tel_estudiante'] ?? '');
-  $ruta = guardarFoto($cod, $_FILES['foto_estudiante'] ?? []);
+  $cod = intval($_POST['cod_hombre'] ?? 0);
+  $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []);
+  $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []);
+  $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []);
+  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);
+  $nom = trim($_POST['nom_produc_hombre'] ?? '');
+  $descripcion = trim($_POST['descripcion_hombre'] ?? '');
+  $precio = trim($_POST['precio_hombre'] ?? '');  
   #  validación de que los campos cumpla con los requerimientos de javascript
-  if ($cod<=0 || $nom==='' || strlen($tel)<7 || !filter_var($email,FILTER_VALIDATE_EMAIL)) {
+  if ($cod<=0 || $nom==='' || $descripcion=== '' || $precio=== '') {
     $_SESSION['flash']='Datos inválidos.';
     header('Location: '.$redirect); exit;
   }
  #insertar a la tabla estudiantes
-  $stmt = db()->prepare("INSERT INTO estudiante (cod_estudiante,email_estudiante,nom_estudiante,tel_estudiante,foto_estudiante) VALUES (?,?,?,?,?)");
-  // cod:int, email:str, nom:str, tel:str, ruta:str
-  $stmt->bind_param('issss',$cod,$email,$nom,$tel,$ruta);
+  $stmt = db()->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precio_hombre) VALUES (?,?,?,?,?,?,?,?)");
+  // cod:int, ruta1:str, ruta2:str, ruta3:str, ruta4:str, nom:str, descripcion:str, precio:str
+  $stmt->bind_param('isssssss',$cod,$ruta1,$ruta2,$ruta3,$ruta4,$nom,$descripcion,$precio);
   if($stmt->execute()){
     #si todos los campos estan llenos se envia o registra la información
     $_SESSION['flash']='Registro completado correctamente.';
@@ -70,7 +73,7 @@ if ($accion==='crear') {
 }
 # Eliminar
 if ($accion==='eliminar') {
-  $id=intval($_GET['id'] ?? 0);
+  $id=intval($_GET['id_hombre'] ?? 0);
   if($id>0){
     // (Opcional) obtener y borrar archivo físico si deseas
     /*
@@ -85,7 +88,7 @@ if ($accion==='eliminar') {
       $res->close();
     }
     */
-    $stmt=db()->prepare("DELETE FROM estudiante WHERE id_estudiante=?");
+    $stmt=db()->prepare("DELETE FROM hombre WHERE id_hombre=?");
     $stmt->bind_param('i',$id);
     $stmt->execute();
     $_SESSION['flash']=$stmt->errno?('Error: '.$stmt->error):'Registro eliminado.';
@@ -94,26 +97,37 @@ if ($accion==='eliminar') {
 }
 # actualizar en el modal
 if ($accion === 'actualizar') {
-  $id = intval($_POST['id_estudiante'] ?? 0);
-  $cod = intval($_POST['cod_estudiante'] ?? 0);
-  $email = trim($_POST['email_estudiante'] ?? '');
-  $nom = trim($_POST['nom_estudiante'] ?? '');
-  $tel = preg_replace('/\D/', '', $_POST['tel_estudiante'] ?? '');
-  $ruta = guardarFoto($cod, $_FILES['foto_estudiante'] ?? []);
+  $id = intval($_POST['id_hombre'] ?? 0);
+  $cod = intval($_POST['cod_hombre'] ?? 0);
+  $nom = trim($_POST['nom_produc_hombre'] ?? '');
+  $descripcion = trim($_POST['descripcion_hombre'] ?? '');
+  $precio = trim($_POST['precio_hombre'] ?? '');
 
-  if ($id <= 0 || $cod <= 0 || $nom === '' || strlen($tel) < 7 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  if ($id <= 0 || $cod <= 0 || $nom === '' || $descripcion === '' || $precio === '') {
       $_SESSION['flash'] = 'Datos inválidos.';
       header('Location: '.$redirect);
       exit;
   }
-# actualizar pero en la tabla estudiante
-  if ($ruta) {
-      $stmt = db()->prepare("UPDATE estudiante SET cod_estudiante=?, email_estudiante=?, nom_estudiante=?, tel_estudiante=?, foto_estudiante=? WHERE id_estudiante=?");
-      $stmt->bind_param('issssi', $cod, $email, $nom, $tel, $ruta, $id);
-  } else {
-      $stmt = db()->prepare("UPDATE estudiante SET cod_estudiante=?, email_estudiante=?, nom_estudiante=?, tel_estudiante=? WHERE id_estudiante=?");
-      $stmt->bind_param('isssi', $cod, $email, $nom, $tel, $id);
+
+  // Obtener fotos actuales si no se suben nuevas
+  $fotos_actuales = [];
+  if ($stmt = db()->prepare("SELECT img_hombre_1, img_hombre_2, img_hombre_3, img_hombre_4 FROM hombre WHERE id_hombre=?")) {
+      $stmt->bind_param('i', $id);
+      $stmt->execute();
+      $stmt->bind_result($fotos_actuales['img_hombre_1'], $fotos_actuales['img_hombre_2'], $fotos_actuales['img_hombre_3'], $fotos_actuales['img_hombre_4']);
+      $stmt->fetch();
+      $stmt->close();
   }
+
+  // Procesar nuevas fotos si se suben
+  $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []) ?: $fotos_actuales['img_hombre_1'] ?? null;
+  $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []) ?: $fotos_actuales['img_hombre_2'] ?? null;
+  $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []) ?: $fotos_actuales['img_hombre_3'] ?? null;
+  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []) ?: $fotos_actuales['img_hombre_4'] ?? null;
+
+  // Actualizar en la tabla hombre
+  $stmt = db()->prepare("UPDATE hombre SET cod_hombre=?, img_hombre_1=?, img_hombre_2=?, img_hombre_3=?, img_hombre_4=?, nom_produc_hombre=?, descripcion_hombre=?, precio_hombre=? WHERE id_hombre=?");
+  $stmt->bind_param('isssssssi', $cod, $ruta1, $ruta2, $ruta3, $ruta4, $nom, $descripcion, $precio, $id);
 
   if ($stmt->execute()) {
       $_SESSION['flash'] = 'Registro actualizado correctamente.';

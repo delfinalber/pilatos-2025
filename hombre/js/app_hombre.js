@@ -1,5 +1,5 @@
-import '../css/registro_estudiante.css';
-import '../css/app.css';
+import '../css/registro_hombre.css';
+import '../css/app_hombre.css';
 
 /*
  * Copyright (c) 2025 . All rights reserved.
@@ -14,24 +14,11 @@ import '../css/app.css';
       if (!form.checkValidity()) { e.preventDefault(); e.stopPropagation(); }
       form.classList.add('was-validated');
     });
-  });
- //Validación del input telefono, formato ingreso números y máximo 12 dígitos minimo 7 digitos
-  // Tel input: solo dígitos y máximo 12, min 7
-  const tel = document.querySelector('input[name="tel_estudiante"]');
-  tel?.addEventListener('input', () => {
-    tel.value = tel.value.replace(/\D/g,'').slice(0,12);
-    tel.setCustomValidity(tel.value.length<7 ? 'Min. 7 dígitos' : '');
-  });
-
-  // Email input: validación básica
-  const email = document.querySelector('input[name="email_estudiante"]');
-  email?.addEventListener('input', () => {
-    email.setCustomValidity(email.validity.typeMismatch ? 'Formato de email inválido' : '');
-  });
+  }); 
 
   //Validación del input código estudiante, formato ingreso números y máximo 11 dígitos
   // Código estudiante: sólo dígitos, máximo 11
-  const cod = document.querySelector('input[name="cod_estudiante"]');
+  const cod = document.querySelector('input[name="cod_hombre"]');
   cod?.addEventListener('input', () => {
     cod.value = cod.value.replace(/\D/g,'').slice(0,11);
     cod.setCustomValidity(cod.value?'':'Requerido');
@@ -58,39 +45,61 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.addEventListener('click', function(e) {
     var btn = e.target.closest('.btn-editar');
     if (btn) {
-      document.getElementById('edit_id_estudiante').value = btn.getAttribute('data-id');
-      document.getElementById('edit_cod_estudiante').value = btn.getAttribute('data-cod');
-      document.getElementById('edit_nom_estudiante').value = btn.getAttribute('data-nom');
-      document.getElementById('edit_email_estudiante').value = btn.getAttribute('data-email');
-      document.getElementById('edit_tel_estudiante').value = btn.getAttribute('data-tel');
-      var foto = btn.getAttribute('data-foto');
-      var fotoDiv = document.getElementById('edit_foto_actual');
-      if(foto){
-        fotoDiv.innerHTML = '<img src="'+foto+'" class="img-mini mb-2" alt="Foto actual">';
+      document.getElementById('edit_id_hombre').value = btn.getAttribute('data-id');
+      document.getElementById('edit_cod_hombre').value = btn.getAttribute('data-cod');
+      var foto1 = btn.getAttribute('data-foto-1');
+      var fotoDiv1 = document.getElementById('edit_img_hombre_1');
+      if(foto1){
+        fotoDiv1.innerHTML = '<img src="'+foto1+'" class="img-mini mb-2" alt="Foto actual">';
       } else {
-        fotoDiv.innerHTML = '';
+        fotoDiv1.innerHTML = '';
       }
+      var foto2 = btn.getAttribute('data-foto-2');
+      var fotoDiv2 = document.getElementById('edit_img_hombre_2');
+      if(foto2){
+        fotoDiv2.innerHTML = '<img src="'+foto2+'" class="img-mini mb-2" alt="Foto actual">';
+      } else {
+        fotoDiv2.innerHTML = '';
+      }
+      var foto3 = btn.getAttribute('data-foto-3');
+      var fotoDiv3 = document.getElementById('edit_img_hombre_3');
+      if(foto3){
+        fotoDiv3.innerHTML = '<img src="'+foto3+'" class="img-mini mb-2" alt="Foto actual">';
+      } else {
+        fotoDiv3.innerHTML = '';
+      }
+      var foto4 = btn.getAttribute('data-foto-4');
+      var fotoDiv4 = document.getElementById('edit_img_hombre_4');
+      if(foto4){
+        fotoDiv4.innerHTML = '<img src="'+foto4+'" class="img-mini mb-2" alt="Foto actual">';
+      } else {
+        fotoDiv4.innerHTML = '';
+      }
+      document.getElementById('edit_nom_produc_hombre').value = btn.getAttribute('data-nom');
+      document.getElementById('edit_descripcion_hombre').value = btn.getAttribute('data-descripcion');
+      document.getElementById('edit_precio_hombre').value = btn.getAttribute('data-precio');
+      
       var modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
       modalEditar.show();
     }
   });
 
-  // Al enviar el formulario de edición, actualizar estudiante vía AJAX y redirigir
+  // Al enviar el formulario de edición, actualizar hombre vía AJAX y redirigir
   document.getElementById('formEditar').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = e.target;
     var formData = new FormData(form);
 //Envia la información el modal por metodo POST
-    fetch('acciones.php', {
+    fetch('acciones_hombre.php', {
       method: 'POST',
       body: formData
     })
-    .then(resp => resp.ok ? resp.text() : Promise.reject('Error en la actualización'))
+    .then(resp => resp.ok ? resp.text() : Promise.reject('Error en la actualización hombre'))
     .then(() => {
-      window.location.href = 'registro_estudiante.php';
+      window.location.href = 'registro_hombre.php';
     })
     .catch(err => {
-      alert('No se pudo actualizar el estudiante: ' + err);
+      alert('No se pudo actualizar el hombre: ' + err);
     });
   });
 });

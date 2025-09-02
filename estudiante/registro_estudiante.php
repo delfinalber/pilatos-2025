@@ -56,7 +56,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" href="../estudiante/registro_estudiante.php">ESTUDIANTE</a></li>
-            <li class="nav-item"><a class="nav-link" href="../hombre/hombre.html">HOMBRE</a></li>
+            <li class="nav-item"><a class="nav-link" href="../hombre/registro_hombre.php">HOMBRE</a></li>
             <li class="nav-item"><a class="nav-link" href="../mujer/mujer.html">MUJER</a></li>
             <li class="nav-item"><a class="nav-link" href="../sale/sale.html">SALE</a></li>
             <li class="nav-item"><a class="nav-link" href="../nuevo/nuevo.html">NUEVO</a></li>
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.btn-editar').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.getElementById('edit_id_estudiante').value = btn.getAttribute('data-id');
-      document.getElementById('edit_cod_estudiante').value = btn.getAttribute('data-cod');
+      document.getElementById('edit_cod_estudiante').value = btn.getAttribute('data-cod');      
       document.getElementById('edit_nom_estudiante').value = btn.getAttribute('data-nom');
       document.getElementById('edit_email_estudiante').value = btn.getAttribute('data-email');
       document.getElementById('edit_tel_estudiante').value = btn.getAttribute('data-tel');
@@ -382,10 +382,10 @@ document.addEventListener('DOMContentLoaded', function() {
             Páginas
           </h6>
           <p>
-            <a href="https://www.pilatos.com/hombre"  class="text-reset">Pilatos</a>
+            <a href="../estudiante/registro_estudiante.php"  class="text-reset">Estudiantes</a>
           </p>
           <p>
-            <a href="../hombre/hombre.html"  class="text-reset">Hombre</a>
+            <a href="../hombre/registro_hombre.php"  class="text-reset">Hombre</a>
           </p>
           <p>
             <a href="../mujer/mujer.html" class="text-reset">Mujer</a>

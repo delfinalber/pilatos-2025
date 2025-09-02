@@ -46,7 +46,6 @@ $redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_estudiante.php'
 # recibir información del formulario registro aprendiz
 if ($accion==='crear') {
   $cod = intval($_POST['cod_estudiante'] ?? 0);
-  $email = trim($_POST['email_estudiante'] ?? '');
   $nom = trim($_POST['nom_estudiante'] ?? '');
   $tel = preg_replace('/\D/','', $_POST['tel_estudiante'] ?? '');
   $ruta = guardarFoto($cod, $_FILES['foto_estudiante'] ?? []);

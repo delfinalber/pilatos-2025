@@ -1,5 +1,5 @@
-import '../css/registro_estudiante.css';
-import '../css/app.css';
+
+import '../css/app_hombre.css';
 
 /*
  * Copyright (c) 2025 . All rights reserved.
