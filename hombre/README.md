@@ -59,6 +59,8 @@ hombre/
 ├── config.php              # Configuración de BD
 ├── registro_hombre.php     # Página principal
 ├── acciones_hombre.php     # Lógica de CRUD
+├── generar_tarjetas.php     # Genera tarjetas Materialize desde BD
+├── hombre.php               # Página dinámica que muestra las tarjetas
 ├── js/
 │   └── app_hombre.js      # JavaScript del frontend
 ├── css/
@@ -74,6 +76,10 @@ hombre/
 ### 1. Acceso Principal
 - Navega a `hombre/registro_hombre.php`
 - Esta es la página principal del sistema
+
+### 1.1 Catálogo dinámico (Materialize)
+- Navega a `hombre/hombre.php`
+- Se renderizan tarjetas dinámicas (Materialize) a partir de la tabla `hombre`
 
 ### 2. Crear Producto
 - Llena el formulario en el lado izquierdo
@@ -103,6 +109,17 @@ hombre/
 - Usa el formulario en `test_hombre.php`
 - Inserta un registro de prueba
 - Verifica que se guarde correctamente
+
+### 2.1 Ver tarjetas dinámicas
+- Abre `hombre/hombre.php`
+- Debes ver una tarjeta por cada fila en la tabla `hombre`
+- Cada tarjeta incluye:
+  - Carrusel con hasta 4 imágenes (usa las columnas `img_hombre_1..4`)
+  - Dos botones para navegar el carrusel
+  - `h5` con el nombre (`nom_produc_hombre`)
+  - Párrafos con descripción y precio
+
+Si no subiste imágenes, se muestra una imagen por defecto.
 
 ### 3. Probar Funcionalidades
 - Crea un producto real
@@ -145,6 +162,21 @@ hombre/
 - Validación de formularios
 - Manejo del modal de edición
 - Envío de formularios por AJAX
+
+### `generar_tarjetas.php`
+- Consulta `SELECT * FROM hombre ORDER BY id_hombre DESC`
+- Construye HTML de tarjetas Materialize con carrousel por producto
+- Escapa contenido para evitar XSS
+
+### `hombre.php`
+- Página que incluye `generar_tarjetas.php` y pinta el grid de tarjetas
+
+## ¿Cómo funciona el render dinámico?
+1. Al registrar un producto en `registro_hombre.php` se guarda en la tabla `hombre` (con rutas relativas para imágenes).
+2. `hombre.php` incluye `generar_tarjetas.php` que consulta todos los productos y genera tarjetas Materialize.
+3. Cada tarjeta crea un `<div class="carousel carousel-slider" id="carouselN">` con 1 a 4 `<a class="carousel-item"><img ...>`.
+4. Debajo hay dos botones que mueven el carrusel. Asegúrate de tener en `style.js` una función `moveCarousel(id, dir)` que use Materialize JS para avanzar/retroceder.
+5. Al actualizar o crear productos, al recargar `hombre.php` verás reflejados los cambios.
 
 ### `config.php`
 - Configuración de base de datos
