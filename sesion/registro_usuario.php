@@ -7,9 +7,9 @@ $mysqli = new mysqli('localhost','root','', 'pilatos');
 if ($mysqli->connect_errno) { die('Error de conexión'); }
 $mysqli->set_charset('utf8mb4');
 
-$buscar = isset($_GET['buscar']) && $_GET['buscar']!=='' ? (int)$_GET['buscar'] : null;
-$where = $buscar ? "WHERE cod_estudiante=".$buscar : '';
-$rows = $mysqli->query("SELECT * FROM estudiante $where ORDER BY id_estudiante DESC");
+$buscar = isset($_GET['buscar']) && $_GET['buscar']!=='' ? trim($_GET['buscar']) : null;
+$where = $buscar ? "WHERE usuario LIKE '%".$mysqli->real_escape_string($buscar)."%'" : '';
+$rows = $mysqli->query("SELECT * FROM sesion $where ORDER BY id_sesion DESC");
 
 function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 ?>
@@ -18,7 +18,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ESTUDIANTES</title>
+  <title>Usuarios</title>
   <link rel="shortcut icon" href="../Img/Logo.png">
   <!-- Bootstrap CSS (usa uno solo para evitar conflictos) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +75,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 
 <header class="header py-3 shadow-sm">
   <div class="container">
-    <h1 class="h4 mb-0">Gestión de Estudiantes</h1>
+    <h1 class="h4 mb-0">Gestión de Usuarios</h1>
   </div>
 </header>
 
@@ -92,35 +92,22 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
     <div class="col-12 col-lg-4">
       <div class="card card-form shadow sidebar">
         <div class="card-body">
-          <h2 class="h5 mb-3">Nuevo estudiante</h2>
-          <form id="formCrear" class="needs-validation" novalidate action="acciones.php" method="post" enctype="multipart/form-data" autocomplete="off">
+          <h2 class="h5 mb-3">Nuevo usuario</h2>
+          <form id="formCrear" class="needs-validation" novalidate action="acciones_usuario.php" method="post" enctype="multipart/form-data" autocomplete="off">
             <input type="hidden" name="accion" value="crear">
-            <input type="hidden" name="redirect" value="registro_estudiante.php">
+            <input type="hidden" name="redirect" value="registro_usuario.php">
+            
             <div class="mb-2">
-              <label class="form-label">Código estudiante</label>
-              <input type="number" class="form-control" name="cod_estudiante" maxlength="11" required>
-              <div class="invalid-feedback">Ingrese el código (numérico).</div>
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nom_estudiante" required>
-              <div class="invalid-feedback">Ingrese el nombre.</div>
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" name="email_estudiante" required>
+              <label class="form-label">Usuario</label>
+              <input type="email" class="form-control" name="usuario" required>
               <div class="invalid-feedback">Correo inválido.</div>
             </div>
             <div class="mb-3">
-              <label class="form-label">Teléfono</label>
-              <input type="tel" class="form-control" name="tel_estudiante" minlength="7" maxlength="12" required>
-              <div class="invalid-feedback">Entre 7 y 12 dígitos.</div>
+              <label class="form-label">Contraseña</label>
+              <input type="text" class="form-control" name="password" required>
+              <div class="invalid-feedback">Contraseña requerida.</div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Foto (se guardará la ruta)</label>
-              <input type="file" class="form-control" name="foto_estudiante" accept="image/*">
-              <div class="form-text">Se almacena en img/fotos</div>
-            </div>
+            
             <div class="d-flex gap-2">
               <button class="btn btn-primary" type="submit">Registrar</button>
               <button class="btn btn-outline-primary" type="reset">Limpiar</button>
@@ -136,11 +123,11 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
         <div class="card-body">
           <form class="row g-2 align-items-center" method="get">
             <div class="col-sm-8">
-              <input type="number" name="buscar" class="form-control" placeholder="Buscar por cod_estudiante" value="<?php echo $buscar ? (int)$buscar : ''; ?>">
+              <input type="email" name="buscar" class="form-control" placeholder="Buscar por usuario (email)" value="<?php echo $buscar ? esc($buscar) : ''; ?>">
             </div>
             <div class="col-sm-4 d-flex gap-2">
               <button class="btn btn-primary w-50" type="submit">Buscar</button>
-              <a class="btn btn-outline-primary w-50" href="registro_estudiante.php">Ver todos</a>
+              <a class="btn btn-outline-primary w-50" href="registro_usuario.php">Ver todos</a>
             </div>
           </form>
         </div>
@@ -153,12 +140,8 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Código</th>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Teléfono</th>
-                  <th>Foto</th>
-                  <th>Fecha</th>
+                  <th>Usuario</th>
+                  <th>Password</th>
                   <th class="text-end">Acciones</th>
                 </tr>
               </thead>
@@ -166,30 +149,21 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
               <?php if($rows && $rows->num_rows): ?>
                 <?php while($r=$rows->fetch_assoc()): ?>
                   <tr>
-                    <td><?php echo $r['id_estudiante']; ?></td>
-                    <td><?php echo $r['cod_estudiante']; ?></td>
-                    <td><?php echo esc($r['nom_estudiante']); ?></td>
-                    <td><?php echo esc($r['email_estudiante']); ?></td>
-                    <td><?php echo esc($r['tel_estudiante']); ?></td>
-                    <td>
-                      <?php if(!empty($r['foto_estudiante'])): ?>
-                        <img src="<?php echo esc($r['foto_estudiante']); ?>" class="img-mini" alt="">
-                      <?php else: ?>—<?php endif; ?>
-                    </td>
-                    <td><?php echo isset($r['fecha']) ? esc($r['fecha']) : ''; ?></td>
+                    <td><?php echo $r['id_sesion']; ?></td>
+                    <td><?php echo $r['usuario']; ?></td>
+                    <td><?php echo esc($r['password']); ?></td> 
+                                      
                     <td class="text-end">
-                      <a href="acciones.php?accion=eliminar&id=<?php echo $r['id_estudiante']; ?>&redirect=registro_estudiante.php"
+                      <a href="acciones_usuario.php?accion=eliminar&id=<?php echo $r['id_sesion']; ?>&redirect=registro_usuario.php"
                          class="btn btn-sm btn-danger" data-confirm="¿Eliminar este registro?">Eliminar</a>
 
                       <button
                         type="button"
                         class="btn btn-sm btn-warning btn-editar"
-                        data-id="<?php echo $r['id_estudiante']; ?>"
-                        data-cod="<?php echo $r['cod_estudiante']; ?>"
-                        data-nom="<?php echo esc($r['nom_estudiante']); ?>"
-                        data-email="<?php echo esc($r['email_estudiante']); ?>"
-                        data-tel="<?php echo esc($r['tel_estudiante']); ?>"
-                        data-foto="<?php echo esc($r['foto_estudiante']); ?>"
+                        data-id="<?php echo $r['id_sesion']; ?>"
+                        data-usuario="<?php echo $r['usuario']; ?>"
+                        data-password="<?php echo esc($r['password']); ?>"
+                        
                       >Editar</button>
                     </td>
                   </tr>
@@ -210,37 +184,24 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
 <!-- Modal Editar Estudiante -->
 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <form class="modal-content" id="formEditar" method="post" action="acciones.php" enctype="multipart/form-data" autocomplete="off" style="background-color:#fff; border-radius:0.5rem;">
+    <form class="modal-content" id="formEditar" method="post" action="acciones_usuario.php" enctype="multipart/form-data" autocomplete="off" style="background-color:#fff; border-radius:0.5rem;">
       <input type="hidden" name="accion" value="actualizar">
-      <input type="hidden" name="id_estudiante" id="edit_id_estudiante">
-      <input type="hidden" name="redirect" value="registro_estudiante.php">
+      <input type="hidden" name="id_sesion" id="edit_id_sesion">
+      <input type="hidden" name="redirect" value="registro_usuario.php">
       <div class="modal-header" style="background-color:#0d6efd; color:#fff;">
-        <h5 class="modal-title" id="modalEditarLabel">Editar Estudiante</h5>
+        <h5 class="modal-title" id="modalEditarLabel">Editar Usuario</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body" style="background-color:#f8f9fa;">
         <div class="mb-2">
-          <label class="form-label" style="color:#0d6efd;">Código estudiante</label>
-          <input type="number" class="form-control" name="cod_estudiante" id="edit_cod_estudiante" maxlength="11" required>
+          <label class="form-label" style="color:#0d6efd;">Usuario</label>
+          <input type="email" class="form-control" name="usuario" id="edit_usuario"  required>
         </div>
         <div class="mb-2">
-          <label class="form-label" style="color:#0d6efd;">Nombre</label>
-          <input type="text" class="form-control" name="nom_estudiante" id="edit_nom_estudiante" required>
-        </div>
-        <div class="mb-2">
-          <label class="form-label" style="color:#0d6efd;">Email</label>
-          <input type="email" class="form-control" name="email_estudiante" id="edit_email_estudiante" required>
-        </div>
-        <div class="mb-2">
-          <label class="form-label" style="color:#0d6efd;">Teléfono</label>
-          <input type="tel" class="form-control" name="tel_estudiante" id="edit_tel_estudiante" minlength="7" maxlength="12" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" style="color:#0d6efd;">Foto (se guardará la ruta)</label>
-          <input type="file" class="form-control" name="foto_estudiante" id="edit_foto_estudiante" accept="image/*">
-          <div class="form-text">Se almacena en img/fotos</div>
-          <div id="edit_foto_actual" class="mt-2"></div>
-        </div>
+          <label class="form-label" style="color:#0d6efd;">Password</label>
+          <input type="text" class="form-control" name="password" id="edit_password">
+        </div>       
+        
       </div>
       <div class="modal-footer" style="background-color:#f8f9fa;">
         <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -291,19 +252,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelectorAll('.btn-editar').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.getElementById('edit_id_estudiante').value = btn.getAttribute('data-id');
-      document.getElementById('edit_cod_estudiante').value = btn.getAttribute('data-cod');
-      document.getElementById('edit_nom_estudiante').value = btn.getAttribute('data-nom');
-      document.getElementById('edit_email_estudiante').value = btn.getAttribute('data-email');
-      document.getElementById('edit_tel_estudiante').value = btn.getAttribute('data-tel');
-
-      var foto = btn.getAttribute('data-foto');
-      var fotoDiv = document.getElementById('edit_foto_actual');
-      if(foto) {
-        fotoDiv.innerHTML = '<img src="'+foto+'" class="img-mini" alt="Foto actual">';
-      } else {
-        fotoDiv.innerHTML = '—';
-      }
+      document.getElementById('edit_id_sesion').value = btn.getAttribute('data-id');
+      document.getElementById('edit_usuario').value = btn.getAttribute('data-usuario');
+      document.getElementById('edit_password').value = btn.getAttribute('data-password');
+      
       modalEditar.show();
     });
   });
@@ -443,6 +395,6 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Copyright -->
 </footer>
 <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
-<script src="./js/app.js"></script>
+<script src="./js/app_usuario.js"></script>
 </body>
 </html>

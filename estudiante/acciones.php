@@ -1,14 +1,11 @@
 <?php
-# aqui llamamos la sesion 
 session_start();
 
-# datos de conexión
 const DB_HOST='localhost';
 const DB_USER='root';
 const DB_PASS='';
 const DB_NAME='pilatos';
 
-# Función conexión a la base de datos
 function db(){
   static $m=null;
   if($m===null){
@@ -16,50 +13,45 @@ function db(){
     if($m->connect_errno){ http_response_code(500); exit('Error DB'); }
     $m->set_charset('utf8mb4');
   }
-  # retorna la conexion a la base de datos
   return $m;
 }
 
-#funcion para guardar la foto, con el formato permitido, la ubicación o directorio donde se guarda la foto
 function guardarFoto($cod,$file){
   if(empty($file['name'])||$file['error']!==UPLOAD_ERR_OK) return null;
-  #directorio o ubicacion de la foto
   $dir=__DIR__.'/img/fotos/';
   if(!is_dir($dir)) mkdir($dir,0775,true);
   $ext=strtolower(pathinfo($file['name'],PATHINFO_EXTENSION));
-  #formato de la foto
   if(!in_array($ext,['jpg','jpeg','png','webp','gif'])) return null;
 
   $name='est_'.intval($cod).'_'.time().'.'.$ext;
   $dest=$dir.$name;
 
   if(!is_uploaded_file($file['tmp_name'])) return null;
-  # validación si no se modifica la foto se deja la misma sin problema
   if(!move_uploaded_file($file['tmp_name'],$dest)) return null;
 
   // Ruta relativa para guardar en la BD
   return 'img/fotos/'.$name;
 }
-# acciones para el registro nuevo de un estudiante
+
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
 $redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_estudiante.php';
-# recibir información del formulario registro aprendiz
+
 if ($accion==='crear') {
   $cod = intval($_POST['cod_estudiante'] ?? 0);
+  $email = trim($_POST['email_estudiante'] ?? '');
   $nom = trim($_POST['nom_estudiante'] ?? '');
   $tel = preg_replace('/\D/','', $_POST['tel_estudiante'] ?? '');
   $ruta = guardarFoto($cod, $_FILES['foto_estudiante'] ?? []);
-  #  validación de que los campos cumpla con los requerimientos de javascript
-  if ($cod<=0 || $nom==='' || strlen($$tel)<7 || !filter_var($email,FILTER_VALIDATE_EMAIL)) {
+
+  if ($cod<=0 || $nom==='' || strlen($tel)<7 || !filter_var($email,FILTER_VALIDATE_EMAIL)) {
     $_SESSION['flash']='Datos inválidos.';
     header('Location: '.$redirect); exit;
   }
- #insertar a la tabla estudiantes
+
   $stmt = db()->prepare("INSERT INTO estudiante (cod_estudiante,email_estudiante,nom_estudiante,tel_estudiante,foto_estudiante) VALUES (?,?,?,?,?)");
   // cod:int, email:str, nom:str, tel:str, ruta:str
   $stmt->bind_param('issss',$cod,$email,$nom,$tel,$ruta);
   if($stmt->execute()){
-    #si todos los campos estan llenos se envia o registra la información
     $_SESSION['flash']='Registro completado correctamente.';
     header('Location: '.$redirect.'?ok=1'); exit;
   } else {
@@ -67,7 +59,7 @@ if ($accion==='crear') {
     header('Location: '.$redirect); exit;
   }
 }
-# Eliminar
+
 if ($accion==='eliminar') {
   $id=intval($_GET['id'] ?? 0);
   if($id>0){
@@ -91,7 +83,7 @@ if ($accion==='eliminar') {
   }
   header('Location: '.$redirect); exit;
 }
-# actualizar en el modal
+
 if ($accion === 'actualizar') {
   $id = intval($_POST['id_estudiante'] ?? 0);
   $cod = intval($_POST['cod_estudiante'] ?? 0);
@@ -105,7 +97,7 @@ if ($accion === 'actualizar') {
       header('Location: '.$redirect);
       exit;
   }
-# actualizar pero en la tabla estudiante
+
   if ($ruta) {
       $stmt = db()->prepare("UPDATE estudiante SET cod_estudiante=?, email_estudiante=?, nom_estudiante=?, tel_estudiante=?, foto_estudiante=? WHERE id_estudiante=?");
       $stmt->bind_param('issssi', $cod, $email, $nom, $tel, $ruta, $id);
