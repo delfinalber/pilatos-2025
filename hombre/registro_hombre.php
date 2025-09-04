@@ -58,7 +58,7 @@ $rows = $mysqli->query("SELECT * FROM hombre $where ORDER BY id_hombre DESC");
             <li class="nav-item"><a class="nav-link" href="../hombre/registro_hombre.php">HOMBRE</a></li>
             <li class="nav-item"><a class="nav-link" href="../mujer/mujer.html">MUJER</a></li>
             <li class="nav-item"><a class="nav-link" href="../sale/sale.html">SALE</a></li>
-            <li class="nav-item"><a class="nav-link" href="../nuevo/nuevo.html">NUEVO</a></li>
+            <li class="nav-item"><a class="nav-link" href="../sesion/registro_usuario.php">SESION</a></li>
           </ul>
         </div>
       </div>
@@ -103,7 +103,7 @@ $rows = $mysqli->query("SELECT * FROM hombre $where ORDER BY id_hombre DESC");
             </div>
             <div class="mb-3">
               <label class="form-label">Foto1 (se guardará la ruta)</label>
-              <input type="file" class="form-control" name="img_hombre_" accept="image/*">
+              <input type="file" class="form-control" name="img_hombre_1" accept="image/*">
               <div class="form-text">Se almacena en img/fotos</div>
             </div>
             <div class="mb-3">
@@ -214,7 +214,7 @@ $rows = $mysqli->query("SELECT * FROM hombre $where ORDER BY id_hombre DESC");
                     <td><?php echo esc($r['nom_produc_hombre']); ?></td>
                     <td><?php echo esc($r['descripcion_hombre']); ?></td>
                     <td><?php echo esc($r['precio_hombre']); ?></td>
-                    <td><?php echo isset($r['fecha']) ? esc($r['fecha']) : ''; ?></td>            
+                    <td><?php echo isset($r['fecha_creacion']) ? esc($r['fecha_creacion']) : ''; ?></td>            
                    
                     <td class="text-end">
                       <a href="acciones_hombre.php?accion=eliminar&id_hombre=<?php echo $r['id_hombre']; ?>&redirect=registro_hombre.php"

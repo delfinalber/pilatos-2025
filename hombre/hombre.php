@@ -34,10 +34,10 @@
             <a href="https://www.pilatos.com/" target="_blank" class="brand-logo"><img src="../img/logo1.png" alt="" style="width: 40px; height: 40px;">Pilatos</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="../index.html" target="_blank">Inicio</a></li>
-              <li><a href="../hombre/hombre.html" target="_blank">Hombre</a></li>
+              <li><a href="../hombre/hombre.php" target="_blank">Hombre</a></li>
               <li><a href="../mujer/mujer.html" target="_blank">Mujer</a></li>
               <li><a href="../sale/sale.html" target="_blank">Sale</a></li>
-              <li><a href="../nuevo/nuevo.html" target="_blank">Nuevo</a></li>
+              <li><a href="../sesion/registro_usuario.php" target="_blank">Sesion</a></li>
             </ul>
           </div>
         </nav>

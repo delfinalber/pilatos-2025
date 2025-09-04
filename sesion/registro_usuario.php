@@ -55,7 +55,7 @@ function esc($s){ return htmlspecialchars((string)$s,ENT_QUOTES,'UTF-8'); }
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" href="../estudiante/registro_estudiante.php">ESTUDIANTE</a></li>
-            <li class="nav-item"><a class="nav-link" href="../hombre/hombre.html">HOMBRE</a></li>
+            <li class="nav-item"><a class="nav-link" href="../hombre/registro_hombre.php">HOMBRE</a></li>
             <li class="nav-item"><a class="nav-link" href="../mujer/mujer.html">MUJER</a></li>
             <li class="nav-item"><a class="nav-link" href="../sale/sale.html">SALE</a></li>
             <li class="nav-item"><a class="nav-link" href="../sesion/registro_usuario.php">SESION</a></li>

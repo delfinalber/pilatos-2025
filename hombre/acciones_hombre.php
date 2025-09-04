@@ -2,23 +2,7 @@
 # aqui llamamos la sesion 
 session_start();
 
-# datos de conexión
-define('DB_HOST','localhost');
-define('DB_USER','root');
-define('DB_PASS','');
-define('DB_NAME','pilatos');
-
-# Función conexión a la base de datos
-function db(){
-  static $m=null;
-  if($m===null){
-    $m=new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-    if($m->connect_errno){ http_response_code(500); exit('Error DB'); }
-    $m->set_charset('utf8mb4');
-  }
-  # retorna la conexion a la base de datos
-  return $m;
-}
+require_once 'config.php';
 
 #funcion para guardar la foto, con el formato permitido, la ubicación o directorio donde se guarda la foto
 function guardarFoto($cod,$file){
@@ -30,7 +14,7 @@ function guardarFoto($cod,$file){
   #formato de la foto
   if(!in_array($ext,['jpg','jpeg','png','webp','gif'])) return null;
 
-  $name='est_'.intval($cod).'_'.time().'.'.$ext;
+  $name='hom_'.intval($cod).'_'.time().'.'.$ext;
   $dest=$dir.$name;
 
   if(!is_uploaded_file($file['tmp_name'])) return null;
@@ -58,14 +42,10 @@ if ($accion==='crear') {
     $_SESSION['flash']='Datos inválidos.';
     header('Location: '.$redirect); exit;
   }
- #insertar a la tabla estudiantes
-  $stmt = db()->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precio_hombre) VALUES (?,?,?,?,?,?,?,?)");
+ #insertar a la tabla hombre
+  $stmt = conectarDB()->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precio_hombre) VALUES (?,?,?,?,?,?,?,?)");
   // cod:int, ruta1:str, ruta2:str, ruta3:str, ruta4:str, nom:str, descripcion:str, precio:str
   $stmt->bind_param('isssssss',$cod,$ruta1,$ruta2,$ruta3,$ruta4,$nom,$descripcion,$precio);
-  // Validar que al menos una imagen haya sido subida, si no, asignar una imagen por defecto
-  if(!$ruta1 && !$ruta2 && !$ruta3 && !$ruta4){
-    $ruta1 = 'img/fotos/default.png'; // Asegúrate de tener esta imagen en el directorio correspondiente
-  }
   if($stmt->execute()){
     #si todos los campos estan llenos se envia o registra la información
     $_SESSION['flash']='Registro completado correctamente.';
@@ -92,7 +72,7 @@ if ($accion==='eliminar') {
       $res->close();
     }
     */
-    $stmt=db()->prepare("DELETE FROM hombre WHERE id_hombre=?");
+    $stmt=conectarDB()->prepare("DELETE FROM hombre WHERE id_hombre=?");
     $stmt->bind_param('i',$id);
     $stmt->execute();
     $_SESSION['flash']=$stmt->errno?('Error: '.$stmt->error):'Registro eliminado.';
@@ -119,7 +99,7 @@ if ($accion === 'actualizar') {
 
   // Obtener fotos actuales si no se suben nuevas
   $fotos_actuales = [];
-  if ($stmt = db()->prepare("SELECT img_hombre_1, img_hombre_2, img_hombre_3, img_hombre_4 FROM hombre WHERE id_hombre=?")) {
+  if ($stmt = conectarDB()->prepare("SELECT img_hombre_1, img_hombre_2, img_hombre_3, img_hombre_4 FROM hombre WHERE id_hombre=?")) {
       $stmt->bind_param('i', $id);
       $stmt->execute();
       $stmt->bind_result($fotos_actuales['img_hombre_1'], $fotos_actuales['img_hombre_2'], $fotos_actuales['img_hombre_3'], $fotos_actuales['img_hombre_4']);
@@ -134,7 +114,7 @@ if ($accion === 'actualizar') {
   $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []) ?: $fotos_actuales['img_hombre_4'] ?? null;
 
   // Actualizar en la tabla hombre
-  $stmt = db()->prepare("UPDATE hombre SET cod_hombre=?, img_hombre_1=?, img_hombre_2=?, img_hombre_3=?, img_hombre_4=?, nom_produc_hombre=?, descripcion_hombre=?, precio_hombre=? WHERE id_hombre=?");
+  $stmt = conectarDB()->prepare("UPDATE hombre SET cod_hombre=?, img_hombre_1=?, img_hombre_2=?, img_hombre_3=?, img_hombre_4=?, nom_produc_hombre=?, descripcion_hombre=?, precio_hombre=? WHERE id_hombre=?");
   $stmt->bind_param('isssssssi', $cod, $ruta1, $ruta2, $ruta3, $ruta4, $nom, $descripcion, $precio, $id);
 
   if ($stmt->execute()) {
