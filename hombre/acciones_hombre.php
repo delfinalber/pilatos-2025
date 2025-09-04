@@ -43,16 +43,33 @@ if ($accion==='crear') {
     header('Location: '.$redirect); exit;
   }
  #insertar a la tabla hombre
-  $stmt = conectarDB()->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precio_hombre) VALUES (?,?,?,?,?,?,?,?)");
-  // cod:int, ruta1:str, ruta2:str, ruta3:str, ruta4:str, nom:str, descripcion:str, precio:str
-  $stmt->bind_param('isssssss',$cod,$ruta1,$ruta2,$ruta3,$ruta4,$nom,$descripcion,$precio);
-  if($stmt->execute()){
-    #si todos los campos estan llenos se envia o registra la información
-    $_SESSION['flash']='Registro completado correctamente.';
-    header('Location: '.$redirect.'?ok=1'); exit;
-  } else {
-    $_SESSION['flash']='Error: '.$stmt->error;
+  try {
+    // Verificar conexión antes de ejecutar la consulta
+    $db = verificarConexion();
+    $stmt = $db->prepare("INSERT INTO hombre (cod_hombre,img_hombre_1,img_hombre_2,img_hombre_3,img_hombre_4,nom_produc_hombre,descripcion_hombre,precio_hombre) VALUES (?,?,?,?,?,?,?,?)");
+    
+    if (!$stmt) {
+      throw new Exception("Error al preparar la consulta: " . $db->error);
+    }
+    
+    // cod:int, ruta1:str, ruta2:str, ruta3:str, ruta4:str, nom:str, descripcion:str, precio:str
+    $stmt->bind_param('isssssss',$cod,$ruta1,$ruta2,$ruta3,$ruta4,$nom,$descripcion,$precio);
+    
+    if($stmt->execute()){
+      #si todos los campos estan llenos se envia o registra la información
+      $_SESSION['flash']='Registro completado correctamente.';
+      header('Location: '.$redirect.'?ok=1'); exit;
+    } else {
+      throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
+    }
+  } catch (Exception $e) {
+    error_log("Error en registro hombre: " . $e->getMessage());
+    $_SESSION['flash']='Error al registrar: ' . $e->getMessage();
     header('Location: '.$redirect); exit;
+  } finally {
+    if (isset($stmt)) {
+      $stmt->close();
+    }
   }
 }
 # Eliminar
@@ -72,10 +89,26 @@ if ($accion==='eliminar') {
       $res->close();
     }
     */
-    $stmt=conectarDB()->prepare("DELETE FROM hombre WHERE id_hombre=?");
-    $stmt->bind_param('i',$id);
-    $stmt->execute();
-    $_SESSION['flash']=$stmt->errno?('Error: '.$stmt->error):'Registro eliminado.';
+    try {
+      $db = verificarConexion();
+      $stmt = $db->prepare("DELETE FROM hombre WHERE id_hombre=?");
+      if (!$stmt) {
+        throw new Exception("Error al preparar la consulta: " . $db->error);
+      }
+      $stmt->bind_param('i',$id);
+      if ($stmt->execute()) {
+        $_SESSION['flash'] = 'Registro eliminado.';
+      } else {
+        throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
+      }
+    } catch (Exception $e) {
+      error_log("Error al eliminar hombre: " . $e->getMessage());
+      $_SESSION['flash'] = 'Error al eliminar: ' . $e->getMessage();
+    } finally {
+      if (isset($stmt)) {
+        $stmt->close();
+      }
+    }
   }
   header('Location: '.$redirect); exit;
 }
@@ -86,7 +119,7 @@ if ($accion === 'actualizar') {
   $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []);
   $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []);
   $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []);
-  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);
+  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);  
   $nom = trim($_POST['nom_produc_hombre'] ?? '');
   $descripcion = trim($_POST['descripcion_hombre'] ?? '');
   $precio = trim($_POST['precio_hombre'] ?? '');
@@ -99,38 +132,59 @@ if ($accion === 'actualizar') {
 
   // Obtener fotos actuales si no se suben nuevas
   $fotos_actuales = [];
-  if ($stmt = conectarDB()->prepare("SELECT img_hombre_1, img_hombre_2, img_hombre_3, img_hombre_4 FROM hombre WHERE id_hombre=?")) {
-      $stmt->bind_param('i', $id);
-      $stmt->execute();
-      $stmt->bind_result($fotos_actuales['img_hombre_1'], $fotos_actuales['img_hombre_2'], $fotos_actuales['img_hombre_3'], $fotos_actuales['img_hombre_4']);
-      $stmt->fetch();
-      $stmt->close();
+  try {
+    $db = verificarConexion();
+    $stmt = $db->prepare("SELECT img_hombre_1, img_hombre_2, img_hombre_3, img_hombre_4 FROM hombre WHERE id_hombre=?");
+    if ($stmt) {
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->bind_result($fotos_actuales['img_hombre_1'], $fotos_actuales['img_hombre_2'], $fotos_actuales['img_hombre_3'], $fotos_actuales['img_hombre_4']);
+        $stmt->fetch();
+        $stmt->close();
+    }
+  } catch (Exception $e) {
+    error_log("Error al obtener fotos actuales: " . $e->getMessage());
   }
 
-  // Procesar nuevas fotos si se suben
+  // Procesar nuevas fotos si se suben, mantener las actuales si no se suben nuevas
   $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []) ?: $fotos_actuales['img_hombre_1'] ?? null;
   $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []) ?: $fotos_actuales['img_hombre_2'] ?? null;
   $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []) ?: $fotos_actuales['img_hombre_3'] ?? null;
   $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []) ?: $fotos_actuales['img_hombre_4'] ?? null;
 
   // Actualizar en la tabla hombre
-  $stmt = conectarDB()->prepare("UPDATE hombre SET cod_hombre=?, img_hombre_1=?, img_hombre_2=?, img_hombre_3=?, img_hombre_4=?, nom_produc_hombre=?, descripcion_hombre=?, precio_hombre=? WHERE id_hombre=?");
-  $stmt->bind_param('isssssssi', $cod, $ruta1, $ruta2, $ruta3, $ruta4, $nom, $descripcion, $precio, $id);
+  try {
+    $db = verificarConexion();
+    $stmt = $db->prepare("UPDATE hombre SET cod_hombre=?, img_hombre_1=?, img_hombre_2=?, img_hombre_3=?, img_hombre_4=?, nom_produc_hombre=?, descripcion_hombre=?, precio_hombre=? WHERE id_hombre=?");
+    
+    if (!$stmt) {
+      throw new Exception("Error al preparar la consulta: " . $db->error);
+    }
+    
+    $stmt->bind_param('isssssssi', $cod, $ruta1, $ruta2, $ruta3, $ruta4, $nom, $descripcion, $precio, $id);
 
-  if ($stmt->execute()) {
-      $_SESSION['flash'] = 'Registro actualizado correctamente.';
-      // Evitar caché al volver
-      header('Expires: Tue, 01 Jan 2000 00:00:00 GMT');
-      header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-      header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-      header('Cache-Control: post-check=0, pre-check=0', false);
-      header('Pragma: no-cache');
-      header('Location: '.$redirect.'?ok=1');
-      exit;
-  } else {
-      $_SESSION['flash'] = 'Error: ' . $stmt->error;
-      header('Location: '.$redirect);
-      exit;
+    if ($stmt->execute()) {
+        $_SESSION['flash'] = 'Registro actualizado correctamente.';
+        // Evitar caché al volver
+        header('Expires: Tue, 01 Jan 2000 00:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        header('Location: '.$redirect.'?ok=1');
+        exit;
+    } else {
+        throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
+    }
+  } catch (Exception $e) {
+    error_log("Error al actualizar hombre: " . $e->getMessage());
+    $_SESSION['flash'] = 'Error al actualizar: ' . $e->getMessage();
+    header('Location: '.$redirect);
+    exit;
+  } finally {
+    if (isset($stmt)) {
+      $stmt->close();
+    }
   }
 }
 

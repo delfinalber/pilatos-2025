@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="../hombre/style.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -205,5 +206,6 @@
     <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="style.js"></script>
+    <script src="../hombre/style.js"></script>
 </body>
 </html>

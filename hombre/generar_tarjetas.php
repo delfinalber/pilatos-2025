@@ -34,7 +34,7 @@ function generarTarjetasProductos() {
                 
                 foreach ($imagenes as $index => $imagen) {
                     if (!empty($imagen)) {
-                        $carouselItems .= '<a class="carousel-item"><img src="../' . $imagen . '" alt="' . $nombre . ' Imagen ' . ($index + 1) . '"></a>';
+                        $carouselItems .= '<a class="carousel-item"><img src="' . $imagen . '" alt="' . $nombre . ' Imagen ' . ($index + 1) . '"></a>';
                     }
                 }
                 
