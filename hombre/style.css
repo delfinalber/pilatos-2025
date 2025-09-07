@@ -2,10 +2,36 @@
  * Copyright (c) 2025 . All rights reserved.
  */
 
- .card {
+
+.card {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    height: 420px; /* Ajusta este valor según tu preferencia */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.carousel.carousel-slider {
+    min-height: 180px;
+    max-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel.carousel-slider img {
+    max-height: 180px;
+    width: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 .card h5 {

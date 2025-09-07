@@ -14,7 +14,9 @@ function guardarFoto($cod,$file){
   #formato de la foto
   if(!in_array($ext,['jpg','jpeg','png','webp','gif'])) return null;
 
-  $name='hom_'.intval($cod).'_'.time().'.'.$ext;
+  // Generar sufijo único por cada imagen usando un hash del nombre temporal y microtime
+  $unique = substr(md5($file['tmp_name'] . microtime(true)), 0, 8);
+  $name='hom_'.intval($cod).'_'.$unique.'.'.$ext;
   $dest=$dir.$name;
 
   if(!is_uploaded_file($file['tmp_name'])) return null;
@@ -24,16 +26,16 @@ function guardarFoto($cod,$file){
   // Ruta relativa para guardar en la BD
   return 'img/fotos/'.$name;
 }
-# acciones para el registro nuevo de un estudiante
+# acciones para el registro nuevo de un hombre
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
 $redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'registro_hombre.php';
-# recibir información del formulario registro aprendiz
+# recibir información del formulario registro hombre
 if ($accion==='crear') {
   $cod = intval($_POST['cod_hombre'] ?? 0);
-  $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []);
-  $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []);
-  $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []);
-  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);
+  $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []) ?: '';
+  $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []) ?: '';
+  $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []) ?: '';
+  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []) ?: '';
   $nom = trim($_POST['nom_produc_hombre'] ?? '');
   $descripcion = trim($_POST['descripcion_hombre'] ?? '');
   $precio = trim($_POST['precio_hombre'] ?? '');  
@@ -119,7 +121,8 @@ if ($accion === 'actualizar') {
   $ruta1 = guardarFoto($cod, $_FILES['img_hombre_1'] ?? []);
   $ruta2 = guardarFoto($cod, $_FILES['img_hombre_2'] ?? []);
   $ruta3 = guardarFoto($cod, $_FILES['img_hombre_3'] ?? []);
-  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);  
+  $ruta4 = guardarFoto($cod, $_FILES['img_hombre_4'] ?? []);
+ 
   $nom = trim($_POST['nom_produc_hombre'] ?? '');
   $descripcion = trim($_POST['descripcion_hombre'] ?? '');
   $precio = trim($_POST['precio_hombre'] ?? '');

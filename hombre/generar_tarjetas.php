@@ -14,15 +14,17 @@ function generarTarjetasProductos() {
         
         $tarjetas = '';
         $carouselCounter = 1;
-        
+        $colCount = 0;
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
+                if ($colCount % 4 == 0) {
+                    $tarjetas .= "<div class='row'>";
+                }
                 $id = $row['id_hombre'];
                 $codigo = $row['cod_hombre'];
                 $nombre = esc($row['nom_produc_hombre']);
                 $descripcion = esc($row['descripcion_hombre']);
                 $precio = esc($row['precio_hombre']);
-                
                 // Generar carousel de imágenes
                 $carouselItems = '';
                 $imagenes = [
@@ -31,18 +33,15 @@ function generarTarjetasProductos() {
                     $row['img_hombre_3'],
                     $row['img_hombre_4']
                 ];
-                
                 foreach ($imagenes as $index => $imagen) {
                     if (!empty($imagen)) {
                         $carouselItems .= '<a class="carousel-item"><img src="' . $imagen . '" alt="' . $nombre . ' Imagen ' . ($index + 1) . '"></a>';
                     }
                 }
-                
                 // Si no hay imágenes, usar una imagen por defecto
                 if (empty($carouselItems)) {
                     $carouselItems = '<a class="carousel-item"><img src="../img/carru-hom/default.webp" alt="' . $nombre . ' Imagen por defecto"></a>';
                 }
-                
                 // Generar la tarjeta
                 $tarjeta = '
                 <!-- Tarjeta ' . $codigo . ' -->
@@ -62,14 +61,20 @@ function generarTarjetasProductos() {
                         </div>
                     </div>
                 </div>';
-                
                 $tarjetas .= $tarjeta;
                 $carouselCounter++;
+                $colCount++;
+                if ($colCount % 4 == 0) {
+                    $tarjetas .= "</div>\n<br>\n<img src='../img/Jean.webp' alt='' style='width: 100%;'>\n<br>\n";
+                }
+            }
+            // Cerrar la última fila si no está cerrada
+            if ($colCount % 4 != 0) {
+                $tarjetas .= "</div>\n<br>\n<img src='../img/Jean.webp' alt='' style='width: 100%;'>\n<br>\n";
             }
         } else {
             $tarjetas = '<div class="col s12"><p class="center-align">No hay productos disponibles</p></div>';
         }
-        
         $mysqli->close();
         return $tarjetas;
         
