@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-09-2025 a las 22:20:21
+-- Tiempo de generación: 07-09-2025 a las 22:39:14
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,7 +47,8 @@ INSERT INTO `estudiante` (`id_estudiante`, `cod_estudiante`, `email_estudiante`,
 (11, 1133313051, 'ramirezfierro34@gmail.com', 'SAMUEL SANTIAGO RAMIREZ FIERRO', '3203150231', 'img/fotos/est_1133313051_1755010278.png', '2025-08-12 14:51:18'),
 (12, 1079175634, 'casanovaortizdaniela@gmail.com', 'DANIELA CASANOCA', '3114203191', 'img/fotos/est_1079175634_1755011702.png', '2025-08-12 14:56:00'),
 (13, 1077228780, 'tomas@gmail.com', 'TOMAS BARRERA ORTIOZ', '3144514465', 'img/fotos/est_1077228780_1755110443.png', '2025-08-13 18:39:44'),
-(14, 6110400, 'danielsaizaraque@gmail.com', 'DANIEL FERNANDO SAIZ ARAQUE', '3045605664', 'img/fotos/est_6110400_1756209381.jpg', '2025-08-26 11:56:21');
+(14, 6110400, 'danielsaizaraque@gmail.com', 'DANIEL FERNANDO SAIZ ARAQUE', '3045605664', 'img/fotos/est_6110400_1756209381.jpg', '2025-08-26 11:56:21'),
+(15, 3333, 'juan@gmail.com', 'JUAN MARAVILLA', '3132334556', 'img/fotos/est_3333_1756934685.png', '2025-09-03 21:24:45');
 
 -- --------------------------------------------------------
 
@@ -67,6 +68,21 @@ CREATE TABLE `hombre` (
   `precio_hombre` varchar(6) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `hombre`
+--
+
+INSERT INTO `hombre` (`id_hombre`, `cod_hombre`, `img_hombre_1`, `img_hombre_2`, `img_hombre_3`, `img_hombre_4`, `nom_produc_hombre`, `descripcion_hombre`, `precio_hombre`, `fecha_creacion`) VALUES
+(7, 1, 'img/fotos/hom_1_450da57d.webp', 'img/fotos/hom_1_e44b35e9.webp', 'img/fotos/hom_1_a5012f68.webp', 'img/fotos/hom_1_8d37047f.webp', 'Jean', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:34:04'),
+(8, 2, 'img/fotos/hom_2_133d5d1e.webp', 'img/fotos/hom_2_67944e23.webp', 'img/fotos/hom_2_5230d74d.webp', 'img/fotos/hom_2_9a00a80f.webp', 'Polo', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:40:42'),
+(9, 3, 'img/fotos/hom_3_0bba99eb.webp', 'img/fotos/hom_3_7abefbd6.webp', 'img/fotos/hom_3_2704893e.webp', 'img/fotos/hom_3_248223e7.webp', 'Pantalon', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:42:09'),
+(10, 4, 'img/fotos/hom_4_5f09dcd8.webp', 'img/fotos/hom_4_64daa618.webp', 'img/fotos/hom_4_85887d69.webp', 'img/fotos/hom_4_c2175e5b.webp', 'Gorra', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada', '$30.00', '2025-09-07 19:46:18'),
+(11, 5, 'img/fotos/hom_5_7577ef12.webp', 'img/fotos/hom_5_3fb349d2.webp', 'img/fotos/hom_5_6156f0cb.webp', 'img/fotos/hom_5_9e84e1d8.webp', 'Jean', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:48:01'),
+(13, 6, 'img/fotos/hom_6_b2055631.webp', 'img/fotos/hom_6_692f88df.webp', 'img/fotos/hom_6_f20a9aa9.webp', 'img/fotos/hom_6_144d480f.webp', 'Polo', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:58:50'),
+(14, 7, 'img/fotos/hom_7_283ece4f.webp', 'img/fotos/hom_7_d81c91f8.webp', 'img/fotos/hom_7_a273dbb2.webp', 'img/fotos/hom_7_3561b383.webp', 'Gorra', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 20:00:38'),
+(15, 8, 'img/fotos/hom_8_7cf31256.webp', 'img/fotos/hom_8_bc5c54ea.webp', 'img/fotos/hom_8_acb93e51.webp', 'img/fotos/hom_8_c2db1ac1.webp', 'Pantalon', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 20:02:07'),
+(16, 9, 'img/fotos/hom_9_fb5b376b.webp', 'img/fotos/hom_9_da0e5473.webp', 'img/fotos/hom_9_b1b69769.webp', 'img/fotos/hom_9_4272a419.webp', 'Pantalon', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 20:13:27');
 
 -- --------------------------------------------------------
 
@@ -116,7 +132,9 @@ CREATE TABLE `sesion` (
 INSERT INTO `sesion` (`id_sesion`, `usuario`, `password`) VALUES
 (1, 'delfin.alber@gmail.com', 'delfin'),
 (2, 'alberdelfintecnico@gmail.com', 'alber'),
-(3, 'caballerooliveroskevininem@gmail.com', 'caballero12345');
+(3, 'caballerooliveroskevininem@gmail.com', 'caballero12345'),
+(4, 'lauris.srp2009@gmail.com', 'laura12345+*'),
+(5, 'hostingdelfin.alber@gmail.com', '123456');
 
 --
 -- Índices para tablas volcadas
@@ -157,13 +175,13 @@ ALTER TABLE `sesion`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `hombre`
 --
 ALTER TABLE `hombre`
-  MODIFY `id_hombre` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_hombre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_sale`
@@ -175,7 +193,7 @@ ALTER TABLE `registro_sale`
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
