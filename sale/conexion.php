@@ -1,10 +1,14 @@
 <?php
+$servidor = "localhost";
+$usuario_db = "root";
+$password_db = "";
+$nombre_db = "pilatos";
 
-//Conexion por procedimientos
-        $mysqli = mysqli_connect("localhost","root","","pilatos");
+// Crear la conexión y asignarla a la variable $conexion
+$conexion = new mysqli($servidor, $usuario_db, $password_db, $nombre_db);
 
-        if ($mysqli->connect_errno) {
-                printf ("Falló la conexión: %s\n", $mysqli->connect_error);
-                exit();
-            }
+// Verificar si hubo un error en la conexión
+if ($conexion->connect_error) {
+    die("Conexión fallida: " . $conexion->connect_error);
+}
 ?>
