@@ -1,4 +1,14 @@
 <?php
+// Incluir PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+// CORRECCIÓN: Añadir 'src/' a las rutas
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 require_once('conexion.php');
 
 // 1. Verificar que todos los datos necesarios fueron enviados
@@ -14,8 +24,8 @@ if (isset($_POST['nombre'], $_POST['apellido'], $_POST['edad'], $_POST['telefono
     $password = $_POST['password']; // Considera usar password_hash() para más seguridad
     $mensaje_form = $_POST['mensaje'];
 
-    // 3. Preparar la consulta para evitar inyección SQL
-    $sql = "INSERT INTO registro_sale(nombre_sale, apellido_sale, edad_sale, telefono_sale, email_sale, usuario_sale, password_sale, mesaje_sale, date_sale) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    // 3. Preparar la consulta para evitar inyección SQL (CORRECCIÓN AQUÍ)
+    $sql = "INSERT INTO registro_sale(nombre_sale, apellido_sale, edad_sale, telefono_sale, email_sale, usuario_sale, password_sale, mensaje_sale, date_sale) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
     
     $stmt = $conexion->prepare($sql);
 
@@ -30,20 +40,46 @@ if (isset($_POST['nombre'], $_POST['apellido'], $_POST['edad'], $_POST['telefono
     // 4. Ejecutar la consulta y verificar el resultado
     if ($stmt->execute()) {
         // 5. Enviar correo si el registro fue exitoso
-        $destinatario = "delfin.alber@gmail.com.com"; // <-- CAMBIA ESTO
-        $asunto = "Nuevo Registro desde Formulario SALE";
-        $cuerpoMensaje = "Se ha recibido un nuevo registro:\n\n";
-        $cuerpoMensaje .= "Nombre: $nombre $apellido\n";
-        $cuerpoMensaje .= "Edad: $edad\n";
-        $cuerpoMensaje .= "Teléfono: $telefono\n";
-        $cuerpoMensaje .= "Email: $email\n";
-        $cuerpoMensaje .= "Usuario: $usuario\n";
-        $cuerpoMensaje .= "Mensaje: $mensaje_form\n";
-        $cabeceras = "From: hostingdelfin@gmail.com";   // Puedes usar un correo de tu dominio
+        $mail = new PHPMailer(true);
+        try {
+            // Configuración del servidor SMTP de Gmail
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'hostingdelfin@gmail.com'; // Tu correo de Gmail
+            $mail->Password   = 'brqd lpsb qlrn wmko '; // <-- PEGA LA NUEVA CONTRASEÑA AQUÍ esta  contraseña se debe generar en google https://myaccount.google.com/apppasswords
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
 
-        mail($destinatario, $asunto, $cuerpoMensaje, $cabeceras);
+            // Remitente y destinatario
+            $mail->setFrom('hostingdelfin@gmail.com', 'Tu Nombre o Empresa');
+            $mail->addAddress('delfin.alber@gmail.com', 'Nombre del Destinatario');
 
-        echo '<script type="text/javascript">alert("Registro guardado exitosamente."); window.location.href = "sale.html";</script>';
+            // Contenido del correo
+            $mail->isHTML(true);
+            $mail->Subject = 'Nuevo Registro desde Formulario SALE';
+            $mail->Body    = nl2br("Se ha recibido un nuevo registro:<br><br>
+                                    Nombre: $nombre $apellido<br>
+                                    Edad: $edad<br>
+                                    Teléfono: $telefono<br>
+                                    Email: $email<br>
+                                    Usuario: $usuario<br>
+                                    Mensaje: $mensaje_form<br>");
+            $mail->AltBody = "Se ha recibido un nuevo registro:\n\n" .
+                             "Nombre: $nombre $apellido\n" .
+                             "Edad: $edad\n" .
+                             "Teléfono: $telefono\n" .
+                             "Email: $email\n" .
+                             "Usuario: $usuario\n" .
+                             "Mensaje: $mensaje_form\n";
+
+            // Enviar el correo
+            $mail->send();
+            echo '<script type="text/javascript">alert("Registro guardado y correo enviado exitosamente."); window.location.href = "sale.html";</script>';
+        } catch (Exception $e) {
+            // Si el correo falla, el registro ya se guardó. Informar del error de correo.
+            echo '<script type="text/javascript">alert("Registro guardado, pero hubo un error al enviar el correo: ' . $mail->ErrorInfo . '"); window.location.href = "sale.html";</script>';
+        }
     } else {
         // Muestra un error si la inserción falla
         echo '<script type="text/javascript">alert("Error al guardar el registro: ' . $stmt->error . '"); window.location.href = "sale.html";</script>';
