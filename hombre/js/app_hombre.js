@@ -43,6 +43,7 @@ import '../css/app_hombre.css';
 document.addEventListener('DOMContentLoaded', function() {
   // Delegación para soportar recarga dinámica de la tabla
   document.body.addEventListener('click', function(e) {
+// sourcery skip: avoid-using-var
     var btn = e.target.closest('.btn-editar');
     if (btn) {
       document.getElementById('edit_id_hombre').value = btn.getAttribute('data-id');
@@ -87,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Al enviar el formulario de edición, actualizar hombre vía AJAX y redirigir
   document.getElementById('formEditar').addEventListener('submit', function(e) {
     e.preventDefault();
+// sourcery skip: avoid-using-var
     var form = e.target;
     var formData = new FormData(form);
 //Envia la información el modal por metodo POST

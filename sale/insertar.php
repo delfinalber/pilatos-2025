@@ -46,14 +46,14 @@ if (isset($_POST['nombre'], $_POST['apellido'], $_POST['edad'], $_POST['telefono
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'hostingdelfin@gmail.com'; // Tu correo de Gmail
+            $mail->Username   = 'hostingdelfin@gmail.com'; // Tu correo de Gmail de donde sale la clave
             $mail->Password   = 'brqd lpsb qlrn wmko '; // <-- PEGA LA NUEVA CONTRASEÑA AQUÍ esta  contraseña se debe generar en google https://myaccount.google.com/apppasswords
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
 
             // Remitente y destinatario
             $mail->setFrom('hostingdelfin@gmail.com', 'Tu Nombre o Empresa');
-            $mail->addAddress('delfin.alber@gmail.com', 'Nombre del Destinatario');
+            $mail->addAddress('delfin.alber@gmail.com', 'Nombre del Destinatario'); // correo a donde van a llegar los email enviados desde el formulario
 
             // Contenido del correo
             $mail->isHTML(true);
