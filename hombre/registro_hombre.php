@@ -149,13 +149,16 @@ $rows = $mysqli->query("SELECT * FROM hombre $where ORDER BY id_hombre DESC");
     <div class="col-12 col-lg-8">
       <div class="card border-0 shadow mb-3">
         <div class="card-body">
-          <form class="row g-2 align-items-center" method="get">
+          <form class="row g-2 align-items-center" method="get" name="buscar">
             <div class="col-sm-8">
               <input type="number" name="buscar" class="form-control" placeholder="Buscar por Código del Hombre" value="<?php echo $buscar ? (int)$buscar : ''; ?>">
             </div>
             <div class="col-sm-4 d-flex gap-2">
               <button class="btn btn-primary w-50" type="submit">Buscar</button>
               <a class="btn btn-outline-primary w-50" href="registro_hombre.php">Ver todos</a>
+            </div>
+            <div class="col-12 mt-2">
+              <a class="btn btn-success w-100" href="acciones_hombre.php?accion=exportar&redirect=registro_hombre.php">Descargar Excel</a>
             </div>
           </form>
         </div>

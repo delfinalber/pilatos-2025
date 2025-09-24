@@ -191,5 +191,64 @@ if ($accion === 'actualizar') {
   }
 }
 
+// Exportar todos los registros a Excel (CSV)
+if ($accion === 'exportar') {
+  try {
+    $db = verificarConexion();
+    $resultado = $db->query("SELECT id_hombre, cod_hombre, img_hombre_1, img_hombre_2, img_hombre_3, img_hombre_4, nom_produc_hombre, descripcion_hombre, precio_hombre, IFNULL(fecha_creacion, '') AS fecha_creacion FROM hombre ORDER BY id_hombre DESC");
+
+    // Encabezados para forzar descarga como archivo de Excel compatible (CSV)
+    $filename = 'hombre_'.date('Ymd_His').'.csv';
+    header('Content-Type: text/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="'.$filename.'"');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+
+    // BOM para que Excel detecte UTF-8 correctamente
+    echo "\xEF\xBB\xBF";
+
+    $salida = fopen('php://output', 'w');
+
+    // Encabezados de columnas (en español)
+    fputcsv($salida, [
+      'ID',
+      'Código',
+      'Imagen 1',
+      'Imagen 2',
+      'Imagen 3',
+      'Imagen 4',
+      'Nombre del producto',
+      'Descripción',
+      'Precio',
+      'Fecha de creación'
+    ]);
+
+    if ($resultado && $resultado->num_rows) {
+      while ($fila = $resultado->fetch_assoc()) {
+        fputcsv($salida, [
+          $fila['id_hombre'],
+          $fila['cod_hombre'],
+          $fila['img_hombre_1'],
+          $fila['img_hombre_2'],
+          $fila['img_hombre_3'],
+          $fila['img_hombre_4'],
+          $fila['nom_produc_hombre'],
+          $fila['descripcion_hombre'],
+          $fila['precio_hombre'],
+          $fila['fecha_creacion']
+        ]);
+      }
+    }
+
+    fclose($salida);
+    exit;
+  } catch (Exception $e) {
+    error_log('Error al exportar hombres: '.$e->getMessage());
+    $_SESSION['flash'] = 'Error al exportar.';
+    header('Location: '.$redirect);
+    exit;
+  }
+}
+
 // Si llega aquí sin coincidencia, redirigir al listado
 header('Location: '.$redirect); exit;
