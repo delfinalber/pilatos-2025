@@ -78,8 +78,8 @@ if ($accion==='crear') {
 if ($accion==='eliminar') {
   $id=intval($_GET['id_hombre'] ?? 0);
   if($id>0){
-    // (Opcional) obtener y borrar archivo físico si deseas
-    /*
+    //(Opcional) obtener y borrar archivo físico si deseas
+    
     if ($res = db()->prepare("SELECT foto_estudiante FROM estudiante WHERE id_estudiante=?")) {
       $res->bind_param('i',$id);
       $res->execute();
@@ -90,7 +90,7 @@ if ($accion==='eliminar') {
       }
       $res->close();
     }
-    */
+    
     try {
       $db = verificarConexion();
       $stmt = $db->prepare("DELETE FROM hombre WHERE id_hombre=?");
