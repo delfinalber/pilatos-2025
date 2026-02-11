@@ -1,0 +1,4 @@
+"dependencies": {
+  "@apollo/server": "latest",
+  "graphql": "latest"
+}
