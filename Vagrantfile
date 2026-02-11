@@ -66,6 +66,12 @@ Vagrant.configure("2") do |config|
   #
   # View the documentation for the provider you are using for more
   # information on available options.
+config.vm.provision "shell", inline: <<-SHELL
+  sudo apt update && sudo apt upgrade -y
+  sudo apt install -y nodejs npm curl git unzip
+  cd /vagrant
+  npm install
+SHELL
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
