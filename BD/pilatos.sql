@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-09-2025 a las 15:34:31
+-- Tiempo de generación: 24-09-2025 a las 23:43:18
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -74,7 +74,6 @@ CREATE TABLE `hombre` (
 --
 
 INSERT INTO `hombre` (`id_hombre`, `cod_hombre`, `img_hombre_1`, `img_hombre_2`, `img_hombre_3`, `img_hombre_4`, `nom_produc_hombre`, `descripcion_hombre`, `precio_hombre`, `fecha_creacion`) VALUES
-(8, 2, 'img/fotos/hom_2_133d5d1e.webp', 'img/fotos/hom_2_67944e23.webp', 'img/fotos/hom_2_5230d74d.webp', 'img/fotos/hom_2_9a00a80f.webp', 'Polo', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:40:42'),
 (9, 3, 'img/fotos/hom_3_0bba99eb.webp', 'img/fotos/hom_3_7abefbd6.webp', 'img/fotos/hom_3_2704893e.webp', 'img/fotos/hom_3_248223e7.webp', 'Pantalon', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:42:09'),
 (10, 4, 'img/fotos/hom_4_5f09dcd8.webp', 'img/fotos/hom_4_64daa618.webp', 'img/fotos/hom_4_85887d69.webp', 'img/fotos/hom_4_c2175e5b.webp', 'Gorra', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada', '$30.00', '2025-09-07 19:46:18'),
 (11, 5, 'img/fotos/hom_5_7577ef12.webp', 'img/fotos/hom_5_3fb349d2.webp', 'img/fotos/hom_5_6156f0cb.webp', 'img/fotos/hom_5_9e84e1d8.webp', 'Jean', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 19:48:01'),
@@ -83,7 +82,8 @@ INSERT INTO `hombre` (`id_hombre`, `cod_hombre`, `img_hombre_1`, `img_hombre_2`,
 (15, 8, 'img/fotos/hom_8_7cf31256.webp', 'img/fotos/hom_8_bc5c54ea.webp', 'img/fotos/hom_8_acb93e51.webp', 'img/fotos/hom_8_c2db1ac1.webp', 'Pantalon', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 20:02:07'),
 (16, 9, 'img/fotos/hom_9_fb5b376b.webp', 'img/fotos/hom_9_da0e5473.webp', 'img/fotos/hom_9_b1b69769.webp', 'img/fotos/hom_9_4272a419.webp', 'Pantalon', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-07 20:13:27'),
 (17, 10, 'img/fotos/hom_10_710fc676.webp', 'img/fotos/hom_10_b54b7a11.webp', 'img/fotos/hom_10_ca5b5969.webp', 'img/fotos/hom_10_ce06e461.webp', 'Chaqueta', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-23 11:48:09'),
-(18, 11, 'img/fotos/hom_11_a4e0dfc0.webp', 'img/fotos/hom_11_bd8ca127.webp', 'img/fotos/hom_11_6af1672f.webp', 'img/fotos/hom_11_0105cf78.webp', 'Gorra', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-23 11:50:47');
+(18, 11, 'img/fotos/hom_11_a4e0dfc0.webp', 'img/fotos/hom_11_bd8ca127.webp', 'img/fotos/hom_11_6af1672f.webp', 'img/fotos/hom_11_0105cf78.webp', 'Gorra', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada.', '$30.00', '2025-09-23 11:50:47'),
+(19, 19, 'img/fotos/hom_19_a5b6f295.webp', 'img/fotos/hom_19_598d3e90.webp', 'img/fotos/hom_19_af79e742.webp', 'img/fotos/hom_19_89f8352f.webp', 'Buzo', 'Descripción breve del producto 1. Diseño atractivo y funcionalidad garantizada', '$30.00', '2025-09-24 18:42:43');
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,8 @@ INSERT INTO `registro_sale` (`id_sale`, `nombre_sale`, `apellido_sale`, `edad_sa
 (8, 'DIANA PAOLA', 'YAGUE CORTES', 46, 3128765451, 'dipayaco@gmail.com', 'diana1234', 'yague23456', 'Hola Delfin, que pagina tan chevere.', '2025-09-22 22:17:43'),
 (9, 'DIANA PAOLA', 'YAGUE CORTES', 46, 3128765451, 'dipayaco@gmail.com', 'diana1234', 'yague23456', 'Hola Delfin, que pagina tan chevere.', '2025-09-22 22:18:58'),
 (10, 'ALBER DELFIN', 'PEÑA ORTIGOZA', 46, 3132345685, 'delfin.alber@gmail.com', 'delfinelloco', 'locoporsoftware', 'Lo mejor de Software.', '2025-09-22 22:27:02'),
-(11, 'CRISTIAN CAMILO ', 'ALEGRIA', 17, 3104710135, 'cristianalegriarivera123@gmail.com', 'cristianalegria12345', 'alegriaeugenio9876', 'Un saludo Delfin, estamos en el Eugenio Ferro Falla, hoy 23 de septiembre del 2025. Estamos programando en PHP.', '2025-09-23 12:23:59');
+(11, 'CRISTIAN CAMILO ', 'ALEGRIA', 17, 3104710135, 'cristianalegriarivera123@gmail.com', 'cristianalegria12345', 'alegriaeugenio9876', 'Un saludo Delfin, estamos en el Eugenio Ferro Falla, hoy 23 de septiembre del 2025. Estamos programando en PHP.', '2025-09-23 12:23:59'),
+(12, 'Andres Felipe', 'Castro Bedoya', 19, 3208270582, 'andresfelipecastrobadoya@gmail.com', 'andresbedoya12345', 'bedoya12345', 'Hola como estan, estamos programando en el Tecnico Superior.', '2025-09-24 19:05:35');
 
 -- --------------------------------------------------------
 
@@ -189,13 +190,13 @@ ALTER TABLE `estudiante`
 -- AUTO_INCREMENT de la tabla `hombre`
 --
 ALTER TABLE `hombre`
-  MODIFY `id_hombre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_hombre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_sale`
 --
 ALTER TABLE `registro_sale`
-  MODIFY `id_sale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_sale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `sesion`
