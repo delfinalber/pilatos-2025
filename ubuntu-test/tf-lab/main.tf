@@ -21,6 +21,29 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+resource "tls_private_key" "ssh_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "deployer" {
+  key_name   = "tf-lab-key-${random_id.key_suffix.hex}"
+  public_key = tls_private_key.ssh_key.public_key_openssh
+}
+
+resource "random_id" "key_suffix" {
+  byte_length = 4
+}
+
+resource "local_file" "private_key" {
+  content  = tls_private_key.ssh_key.private_key_pem
+  filename = "tf-lab-key.pem"
+}
+
+# En aws_instance.mi-vm AGREGAR:
+# key_name = aws_key_pair.deployer.key_name
+
+
 resource "aws_instance" "mi-vm" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
